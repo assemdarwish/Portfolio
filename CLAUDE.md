@@ -43,7 +43,7 @@ Arrays: `SOCIAL`, `AI_VIDEOS`, `EDITING`, `GIFS`, `PRINT`, `TESTIMONIALS`. Empty
 - `hero-fx.js` is the WebGL "living photo" effect for the old swing hero image — no longer loaded (kept in case it's wanted again).
 - `backup-v1/` = the first version of the site. Heavy originals live outside the site in `D:\درويش\website-originals`.
 - Social links in the footer are still `#`. About stats (5+ years, 150+ projects, 15+ brands) are placeholders.
-- Not a git repo (git not installed). Zip snapshots go to `D:\درويش\website-backups\`.
+- Git repo (branch `main`). Git installed via winget at `C:\Program Files\Git\cmd\git.exe` (may not be on PATH in old shells). `.gitignore` excludes `backup-v1/`, `.claude/`, unused hero-fx files. Zip snapshots also go to `D:\درويش\website-backups\`.
 - Hosting plan discussed: GitHub Pages (exclude `backup-v1/` and `.claude/`).
 - WhatsApp: floating button (#waBtn, bottom-right) + footer link → wa.me/201040379430 (owner gave +2001040379430; the extra 0 after +20 was dropped). Prefilled message follows the site language. Hero name width leaves room for it on desktop.
 
