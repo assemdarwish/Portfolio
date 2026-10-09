@@ -614,7 +614,8 @@ addEventListener('load', () => { measurePanels(); setTimeout(openSite, 1300); })
 /* ---------- background music: starts on the first click/tap (browsers block autoplay), fades in/out ---------- */
 const bgm = $('#bgm'), music = $('#music'), musicVol = $('#musicVol');
 let vol = .5, musicPref = null;
-try { vol = +(localStorage.getItem('musicVol') ?? .5); musicPref = localStorage.getItem('music'); } catch (e) {}
+// on/off choice lasts for this visit only, so every new visit opens with music again
+try { vol = +(localStorage.getItem('musicVol') ?? .5); musicPref = sessionStorage.getItem('music'); } catch (e) {}
 musicVol.value = vol;
 let fadeRaf;
 function fadeTo(to, ms, done) {
@@ -641,7 +642,7 @@ $('#musicBtn').onclick = e => {
   e.stopPropagation();
   const on = bgm.paused || !music.classList.contains('playing');
   on ? musicOn() : musicOff();
-  try { localStorage.setItem('music', on ? 'on' : 'off'); } catch (err) {}
+  try { sessionStorage.setItem('music', on ? 'on' : 'off'); } catch (err) {}
 };
 musicVol.addEventListener('input', () => {
   vol = +musicVol.value;

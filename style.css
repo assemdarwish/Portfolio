@@ -21,7 +21,7 @@ ul,ol{list-style:none}
 /* ---------- loader / chrome ---------- */
 .loader{position:fixed;inset:0;background:var(--bg);z-index:999;display:grid;place-content:center;gap:18px;transition:transform .9s var(--ease)}
 .loader.hide{transform:translateY(-100%)}
-.loader-logo{width:clamp(180px,30vw,300px);height:auto;margin:auto;animation:pulseLogo 1.4s ease-in-out infinite}
+.loader-logo{height:clamp(84px,12vw,130px);width:auto;margin:auto;animation:pulseLogo 1.4s ease-in-out infinite}
 @keyframes pulseLogo{50%{opacity:.45;transform:scale(.96)}}
 .loader-bar{width:220px;height:2px;background:var(--line);margin:auto;overflow:hidden}
 .loader-bar i{display:block;height:100%;background:var(--a);animation:load 1.2s var(--ease) forwards;transform:translateX(-100%)}
