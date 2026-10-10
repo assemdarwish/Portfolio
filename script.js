@@ -31,8 +31,10 @@ function fitHero() {
   const el = $('#heroName');
   el.style.fontSize = '100px';
   // leave room on the sides for the floating WhatsApp button on desktop
-  const target = Math.min(innerWidth * (lang === 'ar' ? .86 : .94), innerWidth > 760 ? innerWidth - 200 : innerWidth, 1500);
+  const target = Math.min(innerWidth * (lang === 'ar' ? .86 : .94), innerWidth > 760 ? innerWidth - 230 : innerWidth, 1500);
   el.style.fontSize = (100 * target / el.scrollWidth) + 'px';
+  // the row above the name (intro + buttons) lines up with the name's two edges
+  el.closest('.hero').style.setProperty('--nameW', target + 'px');
 }
 
 /* ---------- word-by-word reveal ---------- */
