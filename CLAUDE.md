@@ -18,7 +18,8 @@ The owner writes in Egyptian Arabic; reply in Egyptian Arabic.
 Hero → Clients (logo wall) → About → Services (5) → WORK 01 Social → WORK 02 AI Videos (wheel) → WORK 03 Video Editing → WORK 04 GIFs → WORK 05 Print → Contact → Footer. (The testimonials section was removed at the owner's request; its CSS and the `TESTIMONIALS` array are leftovers.)
 - Every section is a `.panel` (sticky "stacking cards" transition: next panel slides over, previous darkens via `--cover`).
 - `.anchor` divs before panels are the nav targets. `.dwell` spacer after the wheel section = extra pinned time.
-- Bilingual: every text node uses `data-en` / `data-ar`; `setLang()` swaps and sets `dir=rtl`.
+- English only: the Arabic switch was removed at the owner's request (the `data-ar` texts, `setLang('ar')` paths and the Arabic typography CSS are dormant leftovers; the intro greeting is the only Arabic left, on purpose).
+- Day / night: `#theme` button in the nav sets `html[data-theme=light]` (saved in localStorage, applied by an inline script in <head>). Day mode only re-declares the colour variables (last block of style.css); hero, AI wheel, footer, intro, viewers and the editing cards re-declare the dark values so they stay dark. `lightPanel()` in script.js tells the nav which panels are light in each mode.
 
 ## Content — edit `content.js` only
 Arrays: `SOCIAL`, `AI_VIDEOS`, `EDITING`, `GIFS`, `PRINT`, `TESTIMONIALS`. Empty arrays show "coming soon" tiles.

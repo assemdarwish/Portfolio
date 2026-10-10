@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>try{if(localStorage.getItem('theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
 <title>Assem Darwish — Designer · Editor · AI Video Creator</title>
 <meta name="description" content="Portfolio of Assem Darwish: graphic design, video editing and AI-generated video.">
 <link rel="icon" href="favicon.ico" sizes="32x32">
@@ -12,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Alexandria:wght@600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="assets/media/me-art.webp?v=3">
-<link rel="stylesheet" href="style.css?v=17">
+<link rel="stylesheet" href="style.css?v=18">
 </head>
 <body>
 
@@ -42,7 +43,10 @@
   <div class="music-info"><small data-en="Sound" data-ar="الصوت"></small><b id="musicState">OFF</b></div>
   <input type="range" id="musicVol" min="0" max="1" step="0.01" value="0.5" aria-label="Volume">
 </div>
-    <button class="lang" id="lang" aria-label="Switch language">AR</button>
+    <button class="lang theme-btn" id="theme" aria-label="Switch between night and day mode">
+      <svg class="i-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.500 14.200A8.500 8.500 0 0 1 9.800 3.500a.700.700 0 0 0-.900-.900A9.500 9.500 0 1 0 21.400 15.100a.700.700 0 0 0-.900-.900z"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.200" fill="currentColor"/><path d="M12 2.500v2.200M12 19.300v2.200M2.500 12h2.200M19.300 12h2.200M5.300 5.300l1.600 1.600M17.100 17.100l1.600 1.600M5.300 18.700l1.600-1.600M17.100 6.900l1.600-1.600"/></svg>
+    </button>
     <button class="burger" id="burger" aria-label="Menu"><i></i><i></i></button>
   </div>
 </header>
@@ -279,7 +283,7 @@
 </div>
 
 <script src="content.js?v=11"></script>
-<script src="script.js?v=14"></script>
+<script src="script.js?v=15"></script>
 </body>
 </html>
 

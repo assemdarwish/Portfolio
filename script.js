@@ -3,23 +3,31 @@ const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 const pad = n => String(n).padStart(2, '0');
 const fmt = s => `${Math.floor(s / 60)}:${pad(Math.floor(s % 60))}`;
 const clamp01 = n => Math.min(Math.max(n, 0), 1);
+// the site is English only now (the Arabic switch was removed at the owner's request); data-ar texts are leftovers
 let lang = 'en';
-try { lang = localStorage.getItem('lang') || 'en'; } catch (e) {}
 
 /* ---------- language ---------- */
 function setLang(l) {
   lang = l;
-  try { localStorage.setItem('lang', l); } catch (e) {}
   document.documentElement.lang = l;
   document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
   $$('[data-en]').forEach(el => el.textContent = el.dataset[l]);
-  $('#lang').textContent = l === 'ar' ? 'EN' : 'AR';
   if (active >= 0) $('#wheelTitle').textContent = AI_VIDEOS[active].title[l];
   splitWords();
   fitHero();
   measurePanels();
 }
-$('#lang').onclick = () => setLang(lang === 'ar' ? 'en' : 'ar');
+
+/* ---------- night / day mode ---------- */
+const isDay = () => document.documentElement.dataset.theme === 'light';
+// in day mode every panel is light except the ones that stay "cinema dark"
+const lightPanel = p => isDay() ? !p.matches('.hero,.reel-sec,.foot-sec') : p.classList.contains('light');
+$('#theme').onclick = () => {
+  const day = !isDay();
+  day ? document.documentElement.dataset.theme = 'light' : delete document.documentElement.dataset.theme;
+  try { localStorage.setItem('theme', day ? 'light' : 'dark'); } catch (e) {}
+  fx();
+};
 
 /* ---------- hero: name always spans the full width ---------- */
 function fitHero() {
@@ -594,7 +602,7 @@ function fx() {
   navLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + cur));
   let under = null;
   pr.forEach((r, i) => { if (r.top <= 40 && r.bottom > 40) under = panels[i]; });
-  nav.classList.toggle('on-light', !!under && under.classList.contains('light'));
+  nav.classList.toggle('on-light', !!under && lightPanel(under));
 }addEventListener('scroll', () => { if (!fxQueued) { fxQueued = true; requestAnimationFrame(fx); } }, { passive: true });
 addEventListener('resize', () => { layoutWheel(); fitHero(); measurePanels(); });
 
@@ -632,6 +640,8 @@ setLang(lang);
 document.fonts && document.fonts.ready.then(() => { fitHero(); measurePanels(); });
 // the intro stays long enough for its greeting to finish, even when everything is already cached
 addEventListener('load', () => { measurePanels(); setTimeout(openSite, Math.max(900, 3000 - performance.now())); });
+// never leave a visitor on a slow connection staring at the intro: open after 8 s even if media is still loading
+setTimeout(() => { measurePanels(); openSite(); }, 8000);
 
 
 

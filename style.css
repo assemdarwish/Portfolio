@@ -685,3 +685,24 @@ html.bv-open .wa{opacity:0;pointer-events:none}
 [dir=rtl] .svc h3{font-weight:800;line-height:1.5}
 [dir=rtl] .svc p,[dir=rtl] .clients-lead,[dir=rtl] .foot-lead,[dir=rtl] .hero-intro p{line-height:1.9}
 [dir=rtl] .form span{font-size:.9rem}
+
+/* ---------- day / night switch ---------- */
+.theme-btn{width:38px;height:38px;padding:0;display:grid;place-items:center}
+.theme-btn svg{width:18px;height:18px;grid-area:1/1;transition:transform .5s var(--ease),opacity .3s}
+.theme-btn .i-sun{opacity:0;transform:rotate(-90deg) scale(.4)}
+[data-theme=light] .theme-btn .i-sun{opacity:1;transform:none}
+[data-theme=light] .theme-btn .i-moon{opacity:0;transform:rotate(90deg) scale(.4)}
+
+/* ---------- day mode: the dark panels turn light; hero, AI wheel, footer, intro and the viewers stay dark ---------- */
+html[data-theme=light]{--bg:#f5f2f0;--bg2:#ece7e5;--card:#ffffff;--fg:#141212;--mute:#6b6262;--line:rgba(20,18,18,.13);--light:#e8e2df}
+html[data-theme=light] :is(.hero,.reel-sec,.foot-sec,.loader,.modal,.bv,.links,.pcard,.nav:not(.on-light)){--bg:#141212;--bg2:#1b1717;--card:#1e1a1a;--fg:#ffffff;--mute:#9a9090;--line:rgba(255,255,255,.1);color:#fff}
+html[data-theme=light] body{background:#d9d2cf}
+html[data-theme=light] .ttl.outline{background:linear-gradient(180deg,#141212 35%,#5a4f4f);-webkit-background-clip:text;background-clip:text}
+html[data-theme=light] .tool-ic{background:#1b1616}
+html[data-theme=light] .tool:hover .tool-ic{background:#2a1616}
+html[data-theme=light] .tool:hover span{color:var(--ink)}
+html[data-theme=light] .work-no{color:var(--a)}
+html[data-theme=light] :is(.reel-sec,.foot-sec,.hero) .work-no{color:var(--t)}
+html[data-theme=light] .lwall::before{background:radial-gradient(closest-side,rgba(148,26,26,.2),transparent)}
+html[data-theme=light] .gtile,html[data-theme=light] .gif{border-color:rgba(20,18,18,.12)}
+html[data-theme=light] .obj{opacity:.85}
