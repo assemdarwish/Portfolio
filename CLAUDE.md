@@ -39,6 +39,13 @@ Arrays: `SOCIAL`, `AI_VIDEOS`, `EDITING`, `GIFS`, `PRINT`, `TESTIMONIALS`. Empty
 - Hero: statues photo `assets/media/hero-statues.webp`, dark overlay + cursor spotlight (`#heroDark`, `heroTorch()`); name sits at the bottom so the face stays clear. `fitHero()` waits for the display font before measuring.
 - Music: `assets/media/audio/theme.mp3` = "لحن 2" supplied by the owner (replaced the earlier YouTube track). Bump `?v=` in index.html when swapping it. Control lives in the nav; tries autoplay, otherwise starts on first click. Ducks under viewers.
 
+## Performance rules (keep these)
+- Panels are sticky and stack, so an earlier panel never leaves the viewport geometrically. `fx()` therefore marks every panel that is fully covered by a later one (or still far below) with `.away` (`visibility:hidden`, CSS animations paused) and fires a `vis` event on it. Anything with a rAF loop or a playing video must check `shown(el)` and re-start from `onShown(el, fn)` (see driftRow, the wheel, GIFs, heroTorch) - IntersectionObserver alone is NOT enough here.
+- Scroll effects write only when the value changed; the panel darkening is a real `<i class="cover">` element (opacity), `--inset` is a registered non-inherited property.
+- Hero spotlight = one canvas painted once and moved with `transform` (no per-frame gradient repaint). No `backdrop-filter` anywhere (nav/modal use solid backgrounds).
+- Video posters are lazy (`data-poster`, set by `posterIO`). `style.css`, `content.js`, `script.js` are loaded with `?v=N` in index.html - bump N on every change so visitors don't get a stale cached copy.
+- Phones (<760px): the AI wheel uses a much larger radius (only the top arc shows); floating `.obj` shapes go behind the text at the edges.
+
 ## Leftovers / notes
 - `hero-fx.js` is the WebGL "living photo" effect for the old swing hero image — no longer loaded (kept in case it's wanted again).
 - `backup-v1/` = the first version of the site. Heavy originals live outside the site in `D:\درويش\website-originals`.

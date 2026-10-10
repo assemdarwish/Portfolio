@@ -43,7 +43,7 @@ function splitWords() {
 /* ---------- media helpers: poster first, tiny preview loop on demand, full video only in the viewer ---------- */
 const MEDIA = 'assets/media/';
 const vidPaths = (cat, v) => ({ full: `${MEDIA}${cat}/full/${v.id}.mp4`, preview: `${MEDIA}${cat}/preview/${v.id}.mp4`, poster: `${MEDIA}${cat}/poster/${v.id}.jpg` });
-const clipVideo = p => `<video poster="${p.poster}" data-src="${p.preview}" muted loop playsinline preload="none"></video>`;
+const clipVideo = p => `<video data-poster="${p.poster}" data-src="${p.preview}" muted loop playsinline preload="none"></video>`;
 const T = o => o ? `data-en="${o.en}" data-ar="${o.ar}"` : '';
 function playClip(vid) {
   if (vid.dataset.src) { vid.src = vid.dataset.src; vid.removeAttribute('data-src'); }
@@ -53,6 +53,9 @@ function wireClip(el, v) {
   el.addEventListener('mouseenter', () => { el.classList.add('live'); playClip(v); });
   el.addEventListener('mouseleave', () => { el.classList.remove('live'); if (!el.classList.contains('on')) v.pause(); });
 }
+// a panel gets .away while it is fully covered by the next one or not reached yet (see fx); loops and clips rest meanwhile
+const shown = el => { const p = el.closest('.panel'); return !p || !p.classList.contains('away'); };
+const onShown = (el, fn) => { const p = el.closest('.panel'); if (p) p.addEventListener('vis', fn); };
 const soon = (n, cls) => Array.from({ length: n }, () => `<div class="${cls} soon"><span data-en="Coming soon" data-ar="قريبًا"></span></div>`).join('');
 
 /* ---------- viewer (lightbox): images and videos, with next / previous ---------- */
@@ -94,9 +97,12 @@ function driftRow(row, auto, onOpen) {
   const measure = () => { const k = track.children.length / 2; half = track.children[k] ? track.children[k].offsetLeft - track.children[0].offsetLeft : track.scrollWidth / 2; };
   measure(); addEventListener('resize', measure); addEventListener('load', measure);
   if (auto > 0) x = -half;
-  new IntersectionObserver(([e]) => { seen = e.isIntersecting; if (seen) requestAnimationFrame(step); }).observe(row);
+  let running = false;
+  const wake = () => { if (seen && shown(row) && !running) { running = true; requestAnimationFrame(step); } };
+  new IntersectionObserver(([e]) => { seen = e.isIntersecting; wake(); }).observe(row);
+  onShown(row, wake);
   function step() {
-    if (!seen) return;
+    if (!seen || !shown(row)) { running = false; return; }
     if (!drag) { v += ((hover ? 0 : auto) - v) * .05; x += v; }
     if (half) { while (x <= -half) x += half; while (x > 0) x -= half; }
     track.style.transform = `translate3d(${x}px,0,0)`;
@@ -180,16 +186,20 @@ cards.forEach(c => wireClip(c, $('video', c)));
 
 // the wheel only animates (and plays its active preview) while it is on screen
 let wheelVisible = false;
-new IntersectionObserver(([e]) => {
-  wheelVisible = e.isIntersecting;
+let wheelSeen = false, wheelRunning = false;
+function wheelVis() {
+  wheelVisible = wheelSeen && shown(stage);
   const v = active >= 0 && $('video', cards[active]);
-  if (wheelVisible) { if (v) playClip(v); requestAnimationFrame(tick); } else if (v) v.pause();
-}).observe(stage);
+  if (wheelVisible) { if (v) playClip(v); if (!wheelRunning) { wheelRunning = true; requestAnimationFrame(tick); } } else if (v) v.pause();
+}
+new IntersectionObserver(([e]) => { wheelSeen = e.isIntersecting; wheelVis(); }).observe(stage);
+onShown(stage, wheelVis);
 
 function layoutWheel() {
   // size the wheel to the stage: top arc of cards + the hub text all fit inside one screen
+  // (phones get a much bigger ring, so only its top arc shows instead of a whole wheel squeezed in)
   const h = stage.clientHeight || innerHeight * .8;
-  const R = Math.max(220, Math.min((h - 110) / 1.546, innerWidth * .42, 640)), cw = R * .48, ch = cw * 16 / 9;
+  const R = Math.max(220, Math.min((h - 110) / 1.546, innerWidth * (innerWidth < 760 ? .9 : .42), 640)), cw = R * .48, ch = cw * 16 / 9;
   const cy = ch * .14 + 40 + R + ch / 2, hub = Math.min(2 * (R - ch / 2 - 30), 560);
   Object.entries({ '--r': R, '--cw': cw, '--ch': ch, '--cy': cy, '--hub': hub })
     .forEach(([k, v]) => stage.style.setProperty(k, v + 'px'));
@@ -208,7 +218,7 @@ function setActive(i) {
   $('#wheelTitle').textContent = AI_VIDEOS[i].title[lang];
 }
 function tick() {
-  if (!wheelVisible) return;
+  if (!wheelVisible) { wheelRunning = false; return; }
   if (target !== null) {
     spin += (target - spin) * .1;
     if (Math.abs(target - spin) < .05) { spin = target; target = null; }
@@ -278,10 +288,12 @@ const gifView = GIFS.map(g => ({ type: 'video', src: `${MEDIA}gifs/${g.id}.mp4`,
   if (!GIFS.length) { bento.innerHTML = ['b', 's', 's', 'w', 't', 's'].map(s => `<div class="gif soon size-${s}"><span data-en="Coming soon" data-ar="قريبًا"></span></div>`).join(''); return; }
   bento.innerHTML = GIFS.map((g, i) => `
     <button class="gif size-${g.size || 's'}" data-i="${i}">
-      <video poster="${MEDIA}gifs/${g.id}.jpg" data-src="${MEDIA}gifs/${g.id}.mp4" muted loop playsinline preload="none"></video>
+      <video data-poster="${MEDIA}gifs/${g.id}.jpg" data-src="${MEDIA}gifs/${g.id}.mp4" muted loop playsinline preload="none"></video>
     </button>`).join('');
-  const gio = new IntersectionObserver(es => es.forEach(e => { const v = $('video', e.target); e.isIntersecting ? playClip(v) : v.pause(); }), { rootMargin: '100px' });
+  const sync = g => { const v = $('video', g); g._seen && shown(g) ? playClip(v) : v.pause(); };
+  const gio = new IntersectionObserver(es => es.forEach(e => { e.target._seen = e.isIntersecting; sync(e.target); }), { rootMargin: '100px' });
   $$('.gif', bento).forEach(g => { gio.observe(g); g.onclick = () => openViewer(gifView, +g.dataset.i); });
+  onShown(bento, () => $$('.gif', bento).forEach(sync));
 })();
 
 /* ---------- 05 · print: horizontal gallery driven by vertical scroll ---------- */
@@ -481,6 +493,12 @@ const io = new IntersectionObserver(es => es.forEach(e => {
   io.unobserve(e.target);
 }), { threshold: .15 });
 $$('.reveal').forEach((el, i) => { el.style.transitionDelay = (i % 3) * 90 + 'ms'; io.observe(el); });
+// video posters load only when their clip is about to come on screen
+const posterIO = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.poster = e.target.dataset.poster; posterIO.unobserve(e.target);
+}), { rootMargin: '500px' });
+$$('video[data-poster]').forEach(v => posterIO.observe(v));
 function count(el) {
   const to = +el.dataset.count, suf = el.dataset.suffix || '', t0 = performance.now();
   (function f(t) {
@@ -492,15 +510,19 @@ function count(el) {
 
 /* ---------- stacking panels + scroll-scrubbed effects ---------- */
 const panels = $$('.panel');
+const covers = panels.map(p => { const c = document.createElement('i'); c.className = 'cover'; p.appendChild(c); return c; });
+const setCover = (i, v) => { if (covers[i]._v !== v) { covers[i]._v = v; covers[i].style.opacity = v; } };
 const titles = $$('.ttl');
 const objs = $$('.obj');
 const anchors = $$('.anchor');
 const nav = $('#nav'), bar = $('#progress'), heroMedia = $('#heroMedia');
 
+let docH = 1;
 function measurePanels() {
   layoutPrint();
   panels.forEach((p, i) => { p.style.setProperty('--z', i + 1); p.style.setProperty('--sh', p.offsetHeight + 'px'); });
   measureAnchors();
+  docH = document.documentElement.scrollHeight;
   fx();
 }
 
@@ -524,16 +546,23 @@ function fx() {
 
   // ---- then write ----
   nav.classList.toggle('solid', y > 30);
-  bar.style.width = (y / (document.documentElement.scrollHeight - H) * 100) + '%';
+  bar.style.transform = `scaleX(${(y / Math.max(1, docH - H)).toFixed(4)})`;
 
   // each panel slides up over the pinned one before it: it widens from inset to full bleed,
   // while the one underneath darkens
   for (let i = 1; i < panels.length; i++) {
     const top = pr[i].top;
-    if (top > H || top < -H * .2) { if (top > H) panels[i - 1].style.setProperty('--cover', 0); continue; }
-    const e = clamp01((H - top) / (H * .85));
-    panels[i].style.setProperty('--inset', ((1 - e) * 4).toFixed(2) + '%');
-    panels[i - 1].style.setProperty('--cover', (e * .6).toFixed(3));
+    if (top > H || top < -H * .2) { if (top > H) setCover(i - 1, 0); continue; }
+    const e = clamp01((H - top) / (H * .85)), inset = ((1 - e) * 4).toFixed(2) + '%';
+    if (panels[i]._inset !== inset) { panels[i]._inset = inset; panels[i].style.setProperty('--inset', inset); }
+    setCover(i - 1, (e * .6).toFixed(2));
+  }
+  // rest every panel the visitor cannot see: fully covered by the next one, or still below the screen
+  let covered = false;
+  for (let i = panels.length - 1; i >= 0; i--) {
+    const p = panels[i], away = covered || pr[i].top > H * 1.5;
+    if (away !== !!p._away) { p._away = away; p.classList.toggle('away', away); p.dispatchEvent(new Event('vis')); }
+    if (pr[i].top <= -60 && pr[i].bottom >= H - 1) covered = true;   // this panel hides everything stacked under it
   }
 
   // print gallery slides sideways while its section is pinned
@@ -541,7 +570,8 @@ function fx() {
     const p = clamp01(-psr.top / Math.max(1, psr.height - H));
     printTrack.style.transform = `translate3d(${(document.dir === 'rtl' ? 1 : -1) * p * printOverflow}px,0,0)`;
     const n = Math.max(PRINT.length, 1);
-    $('#printNow').textContent = pad(Math.min(n, Math.round(p * (n - 1)) + 1));
+    const now = pad(Math.min(n, Math.round(p * (n - 1)) + 1));
+    if (fx.printNow !== now) $('#printNow').textContent = fx.printNow = now;
   }
 
   // about paragraph lights up word by word
@@ -549,7 +579,7 @@ function fx() {
     const r = wr[k];
     if (r.top > H || r.bottom < 0) return;
     const ws = w.children, p = clamp01((H * .85 - r.top) / (r.height + H * .3)) * ws.length;
-    for (let i = 0; i < ws.length; i++) ws[i].style.opacity = (.15 + .85 * clamp01(p - i)).toFixed(2);
+    for (let i = 0; i < ws.length; i++) { const o = (.15 + .85 * clamp01(p - i)).toFixed(2); if (ws[i]._o !== o) ws[i].style.opacity = ws[i]._o = o; }
   });
 
   // floating objects drift at their own depth
@@ -696,30 +726,43 @@ function openSite() {
 (function heroTorch() {
   const hero = $('.hero'), dark = $('#heroDark');
   if (!hero || !dark) return;
+  // the dark sheet with its hole is drawn once on a small canvas, stretched, and only moved with transform (GPU, no repaint)
+  const cv = document.createElement('canvas'), RES = 768; cv.width = cv.height = RES; dark.appendChild(cv);
+  let W = 1, Hh = 1, S = 1;
+  function paint() {
+    W = hero.clientWidth; Hh = hero.clientHeight; S = 2 * Math.max(W, Hh) + 40;
+    cv.style.width = cv.style.height = S + 'px';
+    const r = Math.min(300, Math.max(170, innerWidth * .19)) / S * RES, c = cv.getContext('2d'), m = RES / 2;
+    c.clearRect(0, 0, RES, RES);
+    const g = c.createRadialGradient(m, m, 0, m, m, r);
+    g.addColorStop(0, 'rgba(60,40,24,.06)'); g.addColorStop(.35, 'rgba(12,10,10,0)');
+    g.addColorStop(.62, 'rgba(12,10,10,.55)'); g.addColorStop(1, 'rgba(8,6,6,.93)');
+    c.fillStyle = g; c.fillRect(0, 0, RES, RES);
+  }
+  paint(); addEventListener('resize', paint);
   let tx = .5, ty = .35, x = tx, y = ty, lastMove = -1e9, running = false;
   const aim = e => {
     const r = hero.getBoundingClientRect(), p = e.touches ? e.touches[0] : e;
     tx = (p.clientX - r.left) / r.width; ty = (p.clientY - r.top) / r.height; lastMove = performance.now();
-    if (!running) loop();
+    wake();
   };
   hero.addEventListener('mousemove', aim);
   hero.addEventListener('touchmove', aim, { passive: true });
   hero.addEventListener('touchstart', aim, { passive: true });
   function loop() {
-    running = true;
-    const r = hero.getBoundingClientRect();
-    if (r.bottom < 0) { running = false; return; }            // hero off screen: rest
+    if (!shown(hero) || document.hidden) { running = false; return; }   // hero covered by the next section: rest
     const t = performance.now();
     if (t - lastMove > 3500 && !REDUCED) {                     // idle: drift slowly around the face
       tx = .5 + Math.sin(t / 2400) * .16; ty = .36 + Math.sin(t / 1700) * .08;
     }
     x += (tx - x) * .08; y += (ty - y) * .08;
-    dark.style.setProperty('--mx', (x * 100).toFixed(2) + '%');
-    dark.style.setProperty('--my', (y * 100).toFixed(2) + '%');
+    cv.style.transform = `translate3d(${(x * W - S / 2).toFixed(1)}px,${(y * Hh - S / 2).toFixed(1)}px,0)`;
     requestAnimationFrame(loop);
   }
-  loop();
-  addEventListener('scroll', () => { if (!running && scrollY < innerHeight) loop(); }, { passive: true });
+  const wake = () => { if (!running && shown(hero)) { running = true; loop(); } };
+  wake();
+  onShown(hero, wake);
+  document.addEventListener('visibilitychange', wake);
 })();
 
 
@@ -754,7 +797,9 @@ function openSite() {
       p.g.setAttribute('transform', `translate(${(p.cx + ox * p.rx).toFixed(1)} ${(p.cy + oy * p.ry).toFixed(1)})`);
     });
   };
-  const move = e => { px = e.clientX; py = e.clientY; if (!queued) { queued = true; requestAnimationFrame(place); } };
+  let near = false;
+  new IntersectionObserver(([e]) => { near = e.isIntersecting; }, { rootMargin: '200px' }).observe(me);
+  const move = e => { px = e.clientX; py = e.clientY; if (near && !queued) { queued = true; requestAnimationFrame(place); } };
   addEventListener('pointermove', move, { passive: true });
   addEventListener('pointerdown', move, { passive: true });
   place();

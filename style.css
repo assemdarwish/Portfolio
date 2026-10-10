@@ -26,15 +26,15 @@ ul,ol{list-style:none}
 .loader-bar{width:220px;height:2px;background:var(--line);margin:auto;overflow:hidden}
 .loader-bar i{display:block;height:100%;background:var(--a);animation:load 1.2s var(--ease) forwards;transform:translateX(-100%)}
 @keyframes load{to{transform:none}}
-.progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--pill);z-index:200}
+.progress{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;background:var(--pill);z-index:200}
 .cursor{position:fixed;width:34px;height:34px;border:1.5px solid var(--t);border-radius:50%;pointer-events:none;z-index:300;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s,opacity .3s;opacity:0}
 .cursor.big{width:72px;height:72px;background:rgba(148,26,26,.25)}
 @media(hover:none){.cursor{display:none}}
 
 /* ---------- nav ---------- */
 .nav{position:fixed;top:0;inset-inline:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 4%;transition:.4s var(--ease)}
-.nav.solid{background:rgba(20,18,18,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding-block:11px}
-.nav.on-light{background:rgba(242,239,239,.8);color:var(--ink);border-color:var(--ink-line)}
+.nav.solid{background:rgba(20,18,18,.94);border-bottom:1px solid var(--line);padding-block:11px}
+.nav.on-light{background:rgba(242,239,239,.95);color:var(--ink);border-color:var(--ink-line)}
 .nav.on-light .logo img{filter:invert(1)}
 .logo img{height:36px;width:auto;display:block;transition:.4s var(--ease)}
 .nav.solid .logo img{height:30px}
@@ -71,10 +71,15 @@ ul,ol{list-style:none}
 /* ---------- stacking panels ---------- */
 main{position:relative}
 .anchor{height:0}
+@property --inset{syntax:'<percentage>';inherits:false;initial-value:0%}
 .panel{position:sticky;top:min(0px,calc(100vh - var(--sh,100vh)));z-index:var(--z,1);background:var(--bg);overflow-x:clip;
   border-radius:44px 44px 0 0;padding:clamp(90px,11vw,140px) 0 clamp(80px,10vw,130px);
   clip-path:inset(0 var(--inset,0%) 0 var(--inset,0%) round 44px 44px 0 0);box-shadow:0 -1px 0 var(--line)}
-.panel::after{content:"";position:absolute;inset:0;background:#000;opacity:var(--cover,0);pointer-events:none;z-index:60}
+/* darkening sheet over a panel while the next one slides on top (opacity set from script.js) */
+.panel>.cover{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:60;will-change:opacity}
+/* a panel that is fully covered by the next one (or not reached yet) costs nothing: no paint, no animation */
+.panel.away{visibility:hidden}
+.panel.away *,.panel.away *::before,.panel.away *::after{animation-play-state:paused!important}
 .panel.light{background:var(--light);color:var(--ink)}
 .panel.light .hint{color:var(--ink-mute)}
 
@@ -257,7 +262,8 @@ main{position:relative}
 .orbit{position:relative;width:min(430px,84vw);aspect-ratio:1;direction:ltr}
 .orbit-ring{position:absolute;inset:4%;border-radius:50%;border:1px dashed rgba(255,255,255,.18);animation:spin 60s linear infinite}
 .orbit-ring.r2{inset:19%;border-style:solid;border-color:rgba(148,26,26,.55);background:radial-gradient(circle,rgba(148,26,26,.34),transparent 68%);animation:none}
-.me{position:absolute;left:50%;top:50%;width:52%;transform:translate(-50%,-50%);filter:drop-shadow(0 18px 30px rgba(0,0,0,.55));overflow:visible}
+.me{position:absolute;left:50%;top:50%;width:52%;transform:translate(-50%,-50%);overflow:visible}
+.orbit::after{content:"";position:absolute;left:30%;right:30%;top:73%;height:9%;background:radial-gradient(closest-side,rgba(0,0,0,.55),transparent);pointer-events:none}
 .soc{position:absolute;width:64px;height:64px;margin:-32px;display:grid;place-items:center;color:#fff;animation:socBob 5s ease-in-out infinite}
 .soc i{width:100%;height:100%;display:grid;place-items:center;border-radius:50%;background:#1d1a1a;border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 24px rgba(0,0,0,.45);transition:background .35s,border-color .35s,transform .45s var(--ease)}
 .soc svg{width:26px;height:26px}
@@ -277,7 +283,7 @@ main{position:relative}
 .foot-bottom{display:flex;justify-content:space-between;color:var(--mute);font-size:.85rem;border-top:1px solid var(--line);padding-top:20px}
 
 /* ---------- modal player ---------- */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);z-index:400;display:grid;place-items:center;opacity:0;pointer-events:none;transition:.4s}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:400;display:grid;place-items:center;opacity:0;pointer-events:none;transition:.4s}
 .modal.open{opacity:1;pointer-events:auto}
 .modal-box{width:min(960px,92vw);max-height:90vh;border-radius:var(--r);overflow:hidden;background:var(--bg2);transform:scale(.92);transition:.5s var(--ease)}
 .modal.open .modal-box{transform:none}
@@ -330,10 +336,10 @@ main{position:relative}
 .music-btn{width:44px;height:44px;border-radius:50%;border:0;background:var(--pill);display:grid;place-items:center;cursor:pointer;flex:none;transition:transform .3s var(--ease)}
 .music-btn:hover{transform:scale(1.08)}
 .eq{display:flex;align-items:flex-end;gap:3px;height:16px}
-.eq i{width:3px;height:4px;border-radius:2px;background:#fff;transition:height .3s}
+.eq i{width:3px;height:100%;border-radius:2px;background:#fff;transform:scaleY(.25);transform-origin:50% 100%;transition:transform .3s}
 .music.playing .eq i{animation:eq .9s ease-in-out infinite}
 .music.playing .eq i:nth-child(2){animation-delay:-.3s}.music.playing .eq i:nth-child(3){animation-delay:-.6s}.music.playing .eq i:nth-child(4){animation-delay:-.15s}
-@keyframes eq{0%,100%{height:4px}50%{height:16px}}
+@keyframes eq{50%{transform:scaleY(1)}}
 .music-info{display:grid;line-height:1.15}
 .music-info small{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
 .music-info b{font-size:.78rem;letter-spacing:.12em}
@@ -368,7 +374,7 @@ main{position:relative}
 .gtrack{display:flex;gap:18px;width:max-content;will-change:transform}
 .grow{cursor:grab;touch-action:pan-y;user-select:none}.grow.dragging{cursor:grabbing}.grow.dragging .gtile{pointer-events:none}.gtile img{-webkit-user-drag:none;pointer-events:none}
 
-.gtile{flex:none;height:clamp(220px,30vw,360px);aspect-ratio:4/5;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:var(--card);padding:0;cursor:pointer;transition:transform .5s var(--ease),box-shadow .5s}
+.gtile{flex:none;height:clamp(220px,min(30vw,34vh),360px);aspect-ratio:4/5;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:var(--card);padding:0;cursor:pointer;transition:transform .5s var(--ease),box-shadow .5s}
 .gtile img{width:100%;height:100%;object-fit:cover;display:block}
 .gtile:not(.soon):hover{transform:translateY(-8px) rotate(-1.5deg);box-shadow:0 30px 60px -24px rgba(148,26,26,.9)}
 
@@ -500,11 +506,9 @@ main{position:relative}
 [dir=rtl] .hero-name span{line-height:1.15}
 
 /* ---------- hero spotlight: the room is dark, the cursor is a torch ---------- */
-.hero-dark{position:absolute;inset:0;z-index:1;pointer-events:none;--mx:50%;--my:35%;--r:clamp(170px,19vw,300px);
-  background:radial-gradient(circle var(--r) at var(--mx) var(--my),transparent 0,transparent 35%,rgba(12,10,10,.55) 62%,rgba(8,6,6,.93) 100%);
-  transition:opacity 1.2s}
-.hero-dark::after{content:"";position:absolute;inset:0;mix-blend-mode:soft-light;
-  background:radial-gradient(circle calc(var(--r) * .9) at var(--mx) var(--my),rgba(255,214,170,.35),transparent 70%)}
+.hero-dark{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;transition:opacity 1.2s}
+/* the dark sheet with a hole is painted once on a canvas and only moved with transform (script.js heroTorch) */
+.hero-dark canvas{position:absolute;left:0;top:0;will-change:transform}
 .hero-name,.hero-row{z-index:2}
 @media(prefers-reduced-motion:reduce){.hero-dark{opacity:.6}}
 
@@ -592,3 +596,15 @@ html.bv-open{overflow:hidden}
 .wa:hover .wa-icon::before{animation:none;opacity:0}
 html.bv-open .wa{opacity:0;pointer-events:none}
 @media(max-width:760px){.wa{bottom:16px;inset-inline-end:16px;height:54px}.wa-icon{width:46px;height:46px}}
+
+/* ---------- phones: floating shapes sit behind the text, at the edges ---------- */
+@media(max-width:760px){
+  .obj{z-index:-1;opacity:.55;scale:.45}
+  .about-sec .o-sphere{top:4%;left:-7%}
+  .about-sec .o-pill{top:9%;right:-16%}
+  .about-sec .o-ring{bottom:3%;left:-12%}
+  .about-sec .o-star{bottom:5%;right:-8%}
+  .about-sec .o-sphere.sm{top:50%;right:-5%}
+  .contact-sec .o-pill{top:3%;right:-14%}
+  .foot-bottom{padding-right:78px}   /* keeps "back to top" clear of the WhatsApp button */
+}
