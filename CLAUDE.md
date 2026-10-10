@@ -42,7 +42,7 @@ Arrays: `SOCIAL`, `AI_VIDEOS`, `EDITING`, `GIFS`, `PRINT`, `TESTIMONIALS`. Empty
 ## Leftovers / notes
 - `hero-fx.js` is the WebGL "living photo" effect for the old swing hero image — no longer loaded (kept in case it's wanted again).
 - `backup-v1/` = the first version of the site. Heavy originals live outside the site in `D:\درويش\website-originals`.
-- Footer social links: Instagram, Facebook, TikTok, YouTube (owner's real profiles; no Behance/LinkedIn given). About stats (5+ years, 150+ projects, 15+ brands) are placeholders.
+- Footer: no logo/name block any more. Centre = `.orbit`: cut-out portrait sticker (`assets/media/me-sticker.webp`, background removed by flood fill) inside an inline SVG with painted eyes whose pupils follow the pointer (`eyes()` at the end of script.js; eye geometry is in the SVG's 1092x1300 viewBox), with the 4 social chips around it (Instagram, Facebook, TikTok, YouTube - owner's real profiles; no Behance/LinkedIn). Below it `.letters`: the Darwish wordmark cut into 7 images (`assets/media/letters/l1-7.webp`), each nudges on hover (replaced the old geometric shapes row). About stats (5+ years, 150+ projects, 15+ brands) are placeholders.
 - Git repo (branch `main`). Git installed via winget at `C:\Program Files\Git\cmd\git.exe` (may not be on PATH in old shells). `.gitignore` excludes `backup-v1/`, `.claude/`, unused hero-fx files. Zip snapshots also go to `D:\درويش\website-backups\`.
 - Hosting plan discussed: GitHub Pages (exclude `backup-v1/` and `.claude/`).
 - WhatsApp: floating button (#waBtn, bottom-right) + footer link → wa.me/201040379430 (owner gave +2001040379430; the extra 0 after +20 was dropped). Prefilled message follows the site language. Hero name width leaves room for it on desktop.

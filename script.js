@@ -735,3 +735,27 @@ function openSite() {
 })();
 
 
+
+/* ---------- footer portrait: the eyes follow the pointer ---------- */
+(function eyes() {
+  const me = $('#me'); if (!me) return;
+  const pupils = $$('.pupil', me).map(g => ({ g, cx: +g.dataset.cx, cy: +g.dataset.cy, rx: +g.dataset.rx, ry: +g.dataset.ry }));
+  let px = null, py = null, queued = false;
+  const place = () => {
+    queued = false;
+    const r = me.getBoundingClientRect(), k = r.width / 1092;
+    pupils.forEach(p => {
+      let ox = -.8, oy = 0;                       // resting look, same side as the photo
+      if (px !== null && k) {
+        const dx = px - (r.left + p.cx * k), dy = py - (r.top + p.cy * k);
+        const d = Math.hypot(dx, dy) || 1, f = Math.min(d / (r.width * .9), 1);
+        ox = dx / d * f; oy = dy / d * f;
+      }
+      p.g.setAttribute('transform', `translate(${(p.cx + ox * p.rx).toFixed(1)} ${(p.cy + oy * p.ry).toFixed(1)})`);
+    });
+  };
+  const move = e => { px = e.clientX; py = e.clientY; if (!queued) { queued = true; requestAnimationFrame(place); } };
+  addEventListener('pointermove', move, { passive: true });
+  addEventListener('pointerdown', move, { passive: true });
+  place();
+})();
