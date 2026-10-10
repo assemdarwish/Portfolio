@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cairo:wght@400;600;800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
 
@@ -224,21 +224,18 @@
     </div>
     <div class="orbit" id="orbit">
       <span class="orbit-ring"></span><span class="orbit-ring r2"></span>
-      <svg class="me" id="me" viewBox="0 0 1092 1300" aria-hidden="true">
+      <svg class="me" id="me" viewBox="40 55 695 845" data-rest=".35" aria-hidden="true">
         <defs>
-          <clipPath id="eyeL"><path d="M348 680 Q398 638 472 681 Q408 717 348 680Z"/></clipPath>
-          <clipPath id="eyeR"><path d="M635 648 Q689 587 742 637 Q689 671 635 648Z"/></clipPath>
-          <radialGradient id="sclera" cx=".5" cy=".7" r=".6"><stop offset="0" stop-color="#f3e8d6"/><stop offset=".6" stop-color="#e0cfb6"/><stop offset="1" stop-color="#a5835f"/></radialGradient>
-          <radialGradient id="iris"><stop offset=".3" stop-color="#2b190d"/><stop offset=".78" stop-color="#452a16"/><stop offset="1" stop-color="#160c06"/></radialGradient>
-          <linearGradient id="lid" x1="0" y1="0" x2="0" y2="1"><stop offset=".3" stop-color="#1c0f08" stop-opacity=".7"/><stop offset=".58" stop-color="#1c0f08" stop-opacity="0"/></linearGradient>
-          <linearGradient id="corner"><stop offset="0" stop-color="#6b4030" stop-opacity=".55"/><stop offset=".22" stop-color="#6b4030" stop-opacity="0"/><stop offset=".8" stop-color="#6b4030" stop-opacity="0"/><stop offset="1" stop-color="#8a4f3c" stop-opacity=".6"/></linearGradient>
-          <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="1.3"/></filter>
+          <clipPath id="headClip"><polygon points="205,700 150,680 112,620 103,560 125,525 135,490 100,440 72,385 58,315 95,290 90,240 125,225 120,190 175,165 215,130 270,105 330,95 400,75 460,95 520,120 570,160 610,200 640,260 650,330 642,390 660,395 700,405 716,470 705,550 675,600 645,600 648,650 630,720 590,780 540,825 480,865 420,880 350,850 290,805 240,750"/></clipPath>
+          <clipPath id="eyeL"><path d="M217 527 Q265 458 340 482 Q338 512 300 525 Q260 532 217 527Z"/></clipPath>
+          <clipPath id="eyeR"><path d="M433 467 Q478 392 559 426 Q556 455 533 468 Q490 480 433 467Z"/></clipPath>
         </defs>
-        <image href="assets/media/me-sticker.webp" width="1092" height="1300"/>
-        <g clip-path="url(#eyeL)" filter="url(#soft)"><rect x="336" y="640" width="150" height="90" fill="url(#sclera)"/><g class="pupil" data-cx="410" data-cy="676" data-rx="30" data-ry="4"><circle r="25" fill="#120905"/><circle r="23.500" fill="url(#iris)"/><circle r="10" fill="#070403"/><ellipse cx="-8" cy="-9" rx="6" ry="4.500" fill="#dfe9ff" opacity=".9" transform="rotate(-25 -8 -9)"/><circle cx="8" cy="9" r="2.500" fill="#fff" opacity=".35"/></g><rect x="336" y="640" width="150" height="90" fill="url(#lid)"/><rect x="336" y="640" width="150" height="90" fill="url(#corner)"/></g>
-        <path d="M346 681 Q398 636 474 682" fill="none" stroke="#1a0e08" stroke-width="5.500" stroke-linecap="round" filter="url(#soft)"/><path d="M352 684 Q408 717 468 684" fill="none" stroke="#6e3f2b" stroke-width="2" stroke-linecap="round" opacity=".55" filter="url(#soft)"/>
-        <g clip-path="url(#eyeR)" filter="url(#soft)"><rect x="623" y="596" width="132" height="90" fill="url(#sclera)"/><g class="pupil" data-cx="689" data-cy="637" data-rx="27" data-ry="4"><circle r="25" fill="#120905"/><circle r="23.500" fill="url(#iris)"/><circle r="10" fill="#070403"/><ellipse cx="-8" cy="-9" rx="6" ry="4.500" fill="#dfe9ff" opacity=".9" transform="rotate(-25 -8 -9)"/><circle cx="8" cy="9" r="2.500" fill="#fff" opacity=".35"/></g><rect x="623" y="596" width="132" height="90" fill="url(#lid)"/><rect x="623" y="596" width="132" height="90" fill="url(#corner)"/></g>
-        <path d="M633 649 Q689 585 744 638" fill="none" stroke="#1a0e08" stroke-width="5.500" stroke-linecap="round" filter="url(#soft)"/><path d="M640 651 Q689 671 738 641" fill="none" stroke="#6e3f2b" stroke-width="2" stroke-linecap="round" opacity=".55" filter="url(#soft)"/>
+        <image href="assets/media/me-art.webp" width="900" height="1000" clip-path="url(#headClip)"/>
+        <g clip-path="url(#eyeL)"><rect x="200" y="390" width="380" height="160" fill="#f0d29c"/><circle class="pupil" data-cx="282" data-cy="502" data-rx="26" data-ry="7" r="28" fill="#0b0908"/></g>
+        <path d="M217 527 Q265 458 340 482" fill="none" stroke="#0b0908" stroke-width="9" stroke-linecap="round"/>
+        <g clip-path="url(#eyeR)"><rect x="200" y="390" width="380" height="160" fill="#f0d29c"/><circle class="pupil" data-cx="498" data-cy="446" data-rx="26" data-ry="7" r="33" fill="#0b0908"/></g>
+        <path d="M433 467 Q478 392 559 426" fill="none" stroke="#0b0908" stroke-width="9" stroke-linecap="round"/>
+        <polygon points="205,700 150,680 112,620 103,560 125,525 135,490 100,440 72,385 58,315 95,290 90,240 125,225 120,190 175,165 215,130 270,105 330,95 400,75 460,95 520,120 570,160 610,200 640,260 650,330 642,390 660,395 700,405 716,470 705,550 675,600 645,600 648,650 630,720 590,780 540,825 480,865 420,880 350,850 290,805 240,750" fill="none" stroke="#f4ead9" stroke-width="12" stroke-linejoin="round"/>
       </svg>
       <a class="soc s1" href="https://www.instagram.com/darwissh.1" target="_blank" rel="noopener" aria-label="Instagram"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/></svg></i><b>Instagram</b></a>
       <a class="soc s2" href="https://www.facebook.com/share/1Do2ATToqX/" target="_blank" rel="noopener" aria-label="Facebook"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.5l.4-3h-2.9V8.6c0-.9.3-1.5 1.6-1.5h1.4V4.4c-.3 0-1.1-.1-2.100-.1-2.200 0-3.600 1.300-3.600 3.700v2.500H8.300v3h2.500V21z"/></svg></i><b>Facebook</b></a>
@@ -270,8 +267,8 @@
   <div class="modal-box" id="modalBox"></div>
 </div>
 
-<script src="content.js?v=8"></script>
-<script src="script.js?v=8"></script>
+<script src="content.js?v=9"></script>
+<script src="script.js?v=9"></script>
 </body>
 </html>
 

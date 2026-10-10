@@ -786,11 +786,11 @@ function openSite() {
   let px = null, py = null, queued = false;
   const place = () => {
     queued = false;
-    const r = me.getBoundingClientRect(), k = r.width / 1092;
+    const r = me.getBoundingClientRect(), vb = me.viewBox.baseVal, k = r.width / vb.width;
     pupils.forEach(p => {
-      let ox = -.8, oy = 0;                       // resting look, same side as the photo
+      let ox = +me.dataset.rest || 0, oy = 0;      // resting look, same side as the artwork
       if (px !== null && k) {
-        const dx = px - (r.left + p.cx * k), dy = py - (r.top + p.cy * k);
+        const dx = px - (r.left + (p.cx - vb.x) * k), dy = py - (r.top + (p.cy - vb.y) * k);
         const d = Math.hypot(dx, dy) || 1, f = Math.min(d / (r.width * .9), 1);
         ox = dx / d * f; oy = dy / d * f;
       }
