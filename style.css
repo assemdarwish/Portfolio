@@ -9,8 +9,8 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:#000;color:var(--fg);font-family:'Space Grotesk','Cairo',sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-[dir=rtl] body,[dir=rtl] body *{font-family:'Cairo','Space Grotesk',sans-serif}
+body{background:#000;color:var(--fg);font-family:'Plus Jakarta Sans','Cairo',sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+[dir=rtl] body,[dir=rtl] body *{font-family:'Cairo','Plus Jakarta Sans',sans-serif}
 a{color:inherit;text-decoration:none}
 button,input,textarea{font:inherit;color:inherit}
 ul,ol{list-style:none}
@@ -136,20 +136,20 @@ main{position:relative}
 .hub{position:absolute;left:50%;top:var(--cy);width:var(--hub);height:var(--hub);margin:calc(var(--hub) / -2) 0 0 calc(var(--hub) / -2);border-radius:50%;pointer-events:none;
   background:radial-gradient(circle,rgba(148,26,26,.28),rgba(20,18,18,.6) 62%,transparent 72%)}
 .hub-ring{position:absolute;inset:0;width:100%;height:100%;animation:hubspin 30s linear infinite;overflow:visible}
-.hub-ring text{fill:rgba(255,255,255,.55);font:600 13px 'Space Grotesk',sans-serif;letter-spacing:.2em}
+.hub-ring text{fill:rgba(255,255,255,.55);font:600 13px 'Plus Jakarta Sans',sans-serif;letter-spacing:.2em}
 @keyframes hubspin{to{transform:rotate(-360deg)}}
 .hub-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-62%);text-align:center;display:grid;justify-items:center;gap:4px;width:70%}
 .hub-mark{color:var(--t);font-size:.8rem;animation:bob 2.4s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-8px)}}
 .hub-core b{font-family:var(--display);font-stretch:112%;font-weight:900;font-size:calc(var(--hub) * .11);line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap;direction:ltr}
-.hub-core small{font:500 .9rem 'Space Grotesk';color:var(--mute);letter-spacing:.15em;direction:ltr}
+.hub-core small{font:500 .9rem 'Plus Jakarta Sans';color:var(--mute);letter-spacing:.15em;direction:ltr}
 .hub-core small span:first-child{color:var(--fg);font-weight:700}
 .hub-core em{font-style:normal;font-size:.95rem;opacity:.85;min-height:1.4em}
 
 /* clip overlays (wheel + project tiles) */
 .clip-shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,8,8,.92),transparent 55%),linear-gradient(to bottom,rgba(10,8,8,.5),transparent 30%);pointer-events:none}
-.clip-num{position:absolute;font:700 2rem 'Space Grotesk';color:rgba(255,255,255,.92);line-height:1;text-shadow:0 4px 20px rgba(0,0,0,.5)}
-.clip-dur{position:absolute;font:500 .8rem 'Space Grotesk';letter-spacing:.1em;border-radius:99px;background:rgba(0,0,0,.6);border:1px solid var(--line)}
+.clip-num{position:absolute;font:700 2rem 'Plus Jakarta Sans';color:rgba(255,255,255,.92);line-height:1;text-shadow:0 4px 20px rgba(0,0,0,.5)}
+.clip-dur{position:absolute;font:500 .8rem 'Plus Jakarta Sans';letter-spacing:.1em;border-radius:99px;background:rgba(0,0,0,.6);border:1px solid var(--line)}
 .clip-play{position:absolute;top:50%;left:50%;border-radius:50%;display:grid;place-content:center;background:rgba(148,26,26,.88);box-shadow:0 0 0 0 rgba(148,26,26,.6);transform:scale(.8);transition:.5s var(--ease)}
 @keyframes ring{70%{box-shadow:0 0 0 18px transparent}}
 .clip-info{position:absolute;inset-inline:0;bottom:0}
@@ -157,7 +157,7 @@ main{position:relative}
 
 /* ---------- about ---------- */
 .about-sec{min-height:100vh}
-.words{max-width:860px;margin:0 auto 50px;font-size:clamp(1.15rem,2.2vw,1.7rem);line-height:1.6;font-weight:500}
+.words{max-width:860px;margin:0 auto 50px;font-size:clamp(1.15rem,2.2vw,1.7rem);line-height:1.55;font-weight:500;letter-spacing:-.012em}
 .words .w{opacity:.15;transition:opacity .25s}
 .stats{display:flex;justify-content:center;gap:clamp(30px,6vw,80px);margin-bottom:34px;flex-wrap:wrap}
 .stats b{display:block;font-family:var(--display);font-stretch:112%;font-weight:900;font-size:clamp(2.2rem,4vw,3.2rem);line-height:1.1;color:var(--t)}
@@ -363,7 +363,7 @@ main{position:relative}
 
 
 /* ---------- work sections ---------- */
-.work-no{text-align:center;font:600 .78rem 'Space Grotesk',sans-serif;letter-spacing:.35em;color:var(--t);margin-bottom:10px}
+.work-no{text-align:center;font:600 .78rem 'Plus Jakarta Sans',sans-serif;letter-spacing:.35em;color:var(--t);margin-bottom:10px}
 .light .work-no{color:var(--a)}
 .soon{display:grid;place-items:center;background:repeating-linear-gradient(135deg,rgba(148,26,26,.16) 0 14px,rgba(148,26,26,.06) 14px 28px);border:1px dashed rgba(229,72,77,.45)!important;cursor:default}
 .soon span{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;opacity:.75}
@@ -398,7 +398,7 @@ main{position:relative}
 .print-head{display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap}
 .print-head .work-no{width:100%;text-align:start;margin:0}
 .print-head .ttl{margin:0;font-size:clamp(3rem,9vw,8rem)}
-.print-count{margin-inline-start:auto;font:500 1rem 'Space Grotesk';letter-spacing:.15em;color:var(--ink-mute);direction:ltr}
+.print-count{margin-inline-start:auto;font:500 1rem 'Plus Jakarta Sans';letter-spacing:.15em;color:var(--ink-mute);direction:ltr}
 .print-count b{font-size:1.6rem;color:var(--ink)}
 .print-track{display:flex;gap:clamp(16px,2.5vw,30px);padding-inline:max(4vw,calc((100vw - 1180px) / 2));width:max-content;will-change:transform}
 .print-item{position:relative;flex:none;height:min(56vh,540px);aspect-ratio:3/4;border-radius:20px;overflow:hidden;border:0;padding:0;background:#e2dddd;cursor:pointer;box-shadow:0 30px 60px -30px rgba(20,18,18,.55);transition:transform .5s var(--ease)}
@@ -547,7 +547,7 @@ html.bv-open{overflow:hidden}
 .bv-head{display:flex;align-items:center;gap:20px;padding:18px 4%}
 .bv-head small{display:block;font-size:.68rem;letter-spacing:.2em;color:var(--t)}
 .bv-head b{font-size:1.1rem}
-.bv-count{margin-inline-start:auto;font:500 .95rem 'Space Grotesk';letter-spacing:.12em;color:var(--mute)}
+.bv-count{margin-inline-start:auto;font:500 .95rem 'Plus Jakarta Sans';letter-spacing:.12em;color:var(--mute)}
 .bv-count b{color:#fff;font-size:1.25rem}
 .bv-close{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;cursor:pointer}
 .bv-close:hover{background:var(--a)}

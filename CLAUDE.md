@@ -11,7 +11,7 @@ The owner writes in Egyptian Arabic; reply in Egyptian Arabic.
 
 ## Brand
 - Colors: `#941a1a` (brand red), `#141212` (bg), `#ffffff`. Light accent for text: `#e5484d`.
-- Fonts: Archivo (display, wide/900), Space Grotesk (UI), Cairo (Arabic).
+- Fonts: Archivo (display, wide/900), Plus Jakarta Sans (UI, replaced Space Grotesk), Cairo (Arabic).
 - Logo: `assets/media/logo.webp` (white "Darwish" wordmark, already cropped).
 
 ## Page order (index.html)
