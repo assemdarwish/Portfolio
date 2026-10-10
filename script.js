@@ -20,8 +20,8 @@ function setLang(l) {
 
 /* ---------- night / day mode ---------- */
 const isDay = () => document.documentElement.dataset.theme === 'light';
-// in day mode every panel is light except the ones that stay "cinema dark"
-const lightPanel = p => isDay() ? !p.matches('.hero,.reel-sec,.foot-sec') : p.classList.contains('light');
+// in day mode every panel is light
+const lightPanel = p => isDay() || p.classList.contains('light');
 $('#theme').onclick = () => {
   const day = !isDay();
   day ? document.documentElement.dataset.theme = 'light' : delete document.documentElement.dataset.theme;

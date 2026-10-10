@@ -473,7 +473,8 @@ main{position:relative}
 
 /* ---------- clients section: clean logo wall ---------- */
 /* clients: a tilted 3D wall of logo cards drifting in three rows, text beside it */
-.clients-sec{padding-block:clamp(70px,8vw,110px)}
+/* the 3D-rotated rows project far outside the section; without clipping they add ~2000px of empty scroll below the footer */
+.clients-sec{padding-block:clamp(70px,8vw,110px);overflow:hidden;overflow:clip}
 .clients-grid{display:grid;grid-template-columns:minmax(280px,.78fr) 1.5fr;gap:clamp(20px,4vw,60px);align-items:center}
 .clients-copy .work-no{text-align:start}
 .clients-sec .ttl{text-align:start;font-size:clamp(2.1rem,4.4vw,4.2rem);line-height:1;margin-bottom:18px}
@@ -693,16 +694,44 @@ html.bv-open .wa{opacity:0;pointer-events:none}
 [data-theme=light] .theme-btn .i-sun{opacity:1;transform:none}
 [data-theme=light] .theme-btn .i-moon{opacity:0;transform:rotate(90deg) scale(.4)}
 
-/* ---------- day mode: the dark panels turn light; hero, AI wheel, footer, intro and the viewers stay dark ---------- */
+/* ---------- day mode: every section turns light; only the media viewers, the phone menu and the cards that hold white artwork stay dark ---------- */
 html[data-theme=light]{--bg:#f5f2f0;--bg2:#ece7e5;--card:#ffffff;--fg:#141212;--mute:#6b6262;--line:rgba(20,18,18,.13);--light:#e8e2df}
-html[data-theme=light] :is(.hero,.reel-sec,.foot-sec,.loader,.modal,.bv,.links,.pcard,.nav:not(.on-light)){--bg:#141212;--bg2:#1b1717;--card:#1e1a1a;--fg:#ffffff;--mute:#9a9090;--line:rgba(255,255,255,.1);color:#fff}
+html[data-theme=light] :is(.modal,.bv,.links,.pcard,.nav:not(.on-light)){--bg:#141212;--bg2:#1b1717;--card:#1e1a1a;--fg:#ffffff;--mute:#9a9090;--line:rgba(255,255,255,.1);color:#fff}
 html[data-theme=light] body{background:#d9d2cf}
 html[data-theme=light] .ttl.outline{background:linear-gradient(180deg,#141212 35%,#5a4f4f);-webkit-background-clip:text;background-clip:text}
 html[data-theme=light] .tool-ic{background:#1b1616}
 html[data-theme=light] .tool:hover .tool-ic{background:#2a1616}
 html[data-theme=light] .tool:hover span{color:var(--ink)}
 html[data-theme=light] .work-no{color:var(--a)}
-html[data-theme=light] :is(.reel-sec,.foot-sec,.hero) .work-no{color:var(--t)}
 html[data-theme=light] .lwall::before{background:radial-gradient(closest-side,rgba(148,26,26,.2),transparent)}
 html[data-theme=light] .gtile,html[data-theme=light] .gif{border-color:rgba(20,18,18,.12)}
 html[data-theme=light] .obj{opacity:.85}
+
+/* day mode · intro */
+html[data-theme=light] .loader-hi{color:var(--ink);text-shadow:0 0 26px rgba(229,72,77,.3)}
+/* day mode · hero: the veil over the photo is light instead of dark, the spotlight still clears it */
+html[data-theme=light] .hero-dark canvas{filter:invert(1)}
+html[data-theme=light] .hero-dark{opacity:.8}
+html[data-theme=light] .hero-shade{background:linear-gradient(to bottom,rgba(245,242,240,.7) 0%,transparent 16%,transparent 50%,rgba(245,242,240,.6) 68%,rgba(245,242,240,.93) 86%,var(--bg) 100%)!important}
+html[data-theme=light] .hero-name{filter:none}
+html[data-theme=light] .hero-name span{background:linear-gradient(180deg,#141212 30%,#4a4040);-webkit-background-clip:text;background-clip:text}
+html[data-theme=light] .hero-intro,html[data-theme=light] .hero-intro p{color:var(--ink);text-shadow:0 1px 12px rgba(255,255,255,.8)}
+html[data-theme=light] .hero-role{color:var(--a)}
+html[data-theme=light] .hero-row{border-bottom-color:rgba(20,18,18,.22)}
+/* day mode · AI wheel */
+html[data-theme=light] .hub{background:radial-gradient(circle,rgba(148,26,26,.16),rgba(245,242,240,.75) 62%,transparent 72%)}
+html[data-theme=light] .hub-ring text{fill:rgba(20,18,18,.55)}
+html[data-theme=light] .hub-core b{background:linear-gradient(120deg,#141212,#941a1a 55%,#e5484d);-webkit-background-clip:text;background-clip:text}
+html[data-theme=light] .reel-nav button{background:rgba(20,18,18,.04)}
+html[data-theme=light] .reel-nav button:hover{color:#fff}
+html[data-theme=light] .wcard-in{filter:brightness(.8) saturate(.85);box-shadow:0 20px 44px -22px rgba(20,18,18,.55)}
+html[data-theme=light] .wcard.on .wcard-in,html[data-theme=light] .wcard.live .wcard-in{filter:none}
+html[data-theme=light] .clip-info h4,html[data-theme=light] .clip-dur{color:#fff}
+/* day mode · footer */
+html[data-theme=light] .letters img{filter:invert(1)}
+html[data-theme=light] .foot-contact a{color:var(--ink)}
+html[data-theme=light] .foot-contact a:hover{color:var(--a)}
+html[data-theme=light] .orbit-ring{border-color:rgba(20,18,18,.2)}
+html[data-theme=light] .orbit-ring.r2{border-color:rgba(148,26,26,.45);background:radial-gradient(circle,rgba(148,26,26,.2),transparent 68%)}
+html[data-theme=light] .soc:hover b{color:var(--ink)}
+html[data-theme=light] .foot-contact h4,html[data-theme=light] .foot-grid h4{color:var(--a)}
