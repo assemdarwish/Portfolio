@@ -33,7 +33,7 @@ Arrays: `SOCIAL`, `AI_VIDEOS`, `EDITING`, `GIFS`, `PRINT`, `TESTIMONIALS`. Empty
 - No PDF renderer on this machine: PDFs were rasterised in the browser with pdf.js and POSTed to a tiny local python upload server (scratchpad), then the server was stopped.
 
 ## Key behaviours (script.js)
-- `driftRow()` — auto-scrolling, draggable infinite rows (clients logos, social designs). Rows are forced `direction:ltr` (wrap math is LTR).
+- `driftRow()` — auto-scrolling, draggable infinite rows (clients logos, social designs). Clients section = text on one side + `.lwall`: a 3D-tilted wall (perspective + rotateX/Y/Z on `.lwall-in`) of three drifting rows of logo cards; each row holds all 16 logos starting at a different one. Its phone rules live at the END of style.css (they must come after the base rules). Rows are forced `direction:ltr` (wrap math is LTR).
 - AI wheel — rotating ring of clips; geometry sized to fit one screen (`layoutWheel`).
 - `openViewer()` lightbox (images/videos, next/prev). `openBook()` flipbook (page-flip from jsdelivr). `openShowcase()` 3D truck: `truck3d.js` is a classic script (window.mountTruck) using three.js r128 UMD from cdnjs — NOT an ES module, so it works on file://; there the textures come from `tex/textures.data.js` (data URLs).
 - Hero: statues photo `assets/media/hero-statues.webp`, dark overlay + cursor spotlight (`#heroDark`, `heroTorch()`); name sits at the bottom so the face stays clear. `fitHero()` waits for the display font before measuring.

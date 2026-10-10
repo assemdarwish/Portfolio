@@ -125,14 +125,14 @@ function driftRow(row, auto, onOpen) {
   row.addEventListener('pointercancel', () => { drag = null; row.classList.remove('dragging'); });
 }
 
-/* ---------- clients: two rows of logos ---------- */
+/* ---------- clients: tilted wall, three rows of logo cards (every row holds all the logos, starting at a different one) ---------- */
 (function renderClients() {
   const ids = Array.from({ length: 16 }, (_, i) => i + 1);
-  const rows = [ids.filter(i => i % 2), ids.filter(i => !(i % 2))];
-  ['#logos1', '#logos2'].forEach((sel, r) => {
-    const html = rows[r].map(i => `<span class="logo-tile"><img src="assets/media/clients/client-${i}.webp" alt="" draggable="false"></span>`).join('');
+  ['#logos1', '#logos2', '#logos3'].forEach((sel, r) => {
+    const order = ids.map((_, i) => ids[(i + r * 5) % ids.length]);
+    const html = order.map(i => `<span class="logo-tile"><img src="assets/media/clients/client-${i}.webp" alt="" draggable="false"></span>`).join('');
     $(sel).innerHTML = html + html;
-    driftRow($(sel).parentElement, r ? .5 : -.5);
+    driftRow($(sel).parentElement, [-.4, .5, -.3][r]);
   });
   // optical sizing: every logo gets roughly the same visual area, so square marks don't overpower wide wordmarks
   $$('.logo-tile img').forEach(img => {
