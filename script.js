@@ -619,13 +619,14 @@ try { vol = +(localStorage.getItem('musicVol') ?? .5); musicPref = sessionStorag
 musicVol.value = vol;
 let fadeRaf;
 function fadeTo(to, ms, done) {
-  cancelAnimationFrame(fadeRaf);
+  // timer, not rAF: rAF stops in background tabs and would leave the music stuck at volume 0
+  clearInterval(fadeRaf);
   const from = bgm.volume, t0 = performance.now();
-  (function f(t) {
-    const p = Math.min((t - t0) / ms, 1);
-    bgm.volume = from + (to - from) * p;
-    if (p < 1) fadeRaf = requestAnimationFrame(f); else if (done) done();
-  })(t0);
+  fadeRaf = setInterval(() => {
+    const p = Math.min((performance.now() - t0) / ms, 1);
+    bgm.volume = Math.min(1, Math.max(0, from + (to - from) * p));
+    if (p >= 1) { clearInterval(fadeRaf); if (done) done(); }
+  }, 40);
 }
 function setMusicUI(on) {
   music.classList.toggle('playing', on);
@@ -642,18 +643,26 @@ $('#musicBtn').onclick = e => {
   e.stopPropagation();
   const on = bgm.paused || !music.classList.contains('playing');
   on ? musicOn() : musicOff();
-  try { sessionStorage.setItem('music', on ? 'on' : 'off'); } catch (err) {}
+  musicPref = on ? 'on' : 'off';
+  try { sessionStorage.setItem('music', musicPref); } catch (err) {}
 };
 musicVol.addEventListener('input', () => {
   vol = +musicVol.value;
-  if (!bgm.paused) { cancelAnimationFrame(fadeRaf); bgm.volume = modal.classList.contains('open') ? vol * .15 : vol; }
+  if (!bgm.paused) { clearInterval(fadeRaf); bgm.volume = modal.classList.contains('open') ? vol * .15 : vol; }
   try { localStorage.setItem('musicVol', vol); } catch (e) {}
 });
 // first interaction anywhere starts the music, unless the visitor switched it off before
 if (musicPref !== 'off') {
   music.classList.add('hint');
-  const kick = e => { if (!e.target.closest('#music')) musicOn(); removeEventListener('pointerdown', kick); removeEventListener('keydown', kick); };
-  addEventListener('pointerdown', kick); addEventListener('keydown', kick);
+  // keep listening until the browser actually lets it play (a touch-scroll, for one, doesn't count as a gesture)
+  const gestures = ['pointerdown', 'pointerup', 'click', 'touchend', 'keydown'];
+  const stop = () => gestures.forEach(g => removeEventListener(g, kick, true));
+  const kick = e => {
+    if (e.target.closest && e.target.closest('#music')) return stop();
+    if (musicPref === 'off' || !bgm.paused) return stop();
+    musicOn().then(ok => { if (ok) stop(); });
+  };
+  gestures.forEach(g => addEventListener(g, kick, true));
 }
 // duck under the video player, pause while the tab is hidden
 new MutationObserver(() => {
