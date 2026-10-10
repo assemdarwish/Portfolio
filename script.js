@@ -476,15 +476,6 @@ function layoutPrint() {
   printSec.style.height = (innerHeight + Math.max(printOverflow, innerHeight * .4)) + 'px';
 }
 
-/* ---------- testimonials: two rows drifting in opposite directions ---------- */
-const qCard = q => `
-  <div class="qcard"><span class="qlogo"><img src="assets/media/clients/client-${q.logo}.webp" alt=""></span>
-    <div><p ${T(q.text)}></p><b>${q.name}</b></div></div>`;
-const half = Math.ceil(TESTIMONIALS.length / 2);
-[TESTIMONIALS.slice(0, half), TESTIMONIALS.slice(half)].forEach((row, r) => {
-  const html = row.map(qCard).join('');
-  $(r ? '#q2' : '#q1').innerHTML = html + html;
-});
 /* ---------- reveal on view + counters ---------- */
 const io = new IntersectionObserver(es => es.forEach(e => {
   if (!e.isIntersecting) return;

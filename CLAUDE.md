@@ -15,7 +15,7 @@ The owner writes in Egyptian Arabic; reply in Egyptian Arabic.
 - Logo: `assets/media/logo.webp` (white "Darwish" wordmark, already cropped).
 
 ## Page order (index.html)
-Hero → Clients (logo wall) → About → Services (5) → WORK 01 Social → WORK 02 AI Videos (wheel) → WORK 03 Video Editing → WORK 04 GIFs → WORK 05 Print → Testimonials → Contact → Footer.
+Hero → Clients (logo wall) → About → Services (5) → WORK 01 Social → WORK 02 AI Videos (wheel) → WORK 03 Video Editing → WORK 04 GIFs → WORK 05 Print → Contact → Footer. (The testimonials section was removed at the owner's request; its CSS and the `TESTIMONIALS` array are leftovers.)
 - Every section is a `.panel` (sticky "stacking cards" transition: next panel slides over, previous darkens via `--cover`).
 - `.anchor` divs before panels are the nav targets. `.dwell` spacer after the wheel section = extra pinned time.
 - Bilingual: every text node uses `data-en` / `data-ar`; `setLang()` swaps and sets `dir=rtl`.
@@ -23,7 +23,7 @@ Hero → Clients (logo wall) → About → Services (5) → WORK 01 Social → W
 ## Content — edit `content.js` only
 Arrays: `SOCIAL`, `AI_VIDEOS`, `EDITING`, `GIFS`, `PRINT`, `TESTIMONIALS`. Empty arrays show "coming soon" tiles.
 - PRINT item types: flat image `{id,...}`, book `{id, book:{pages, ratio}}` (flipbook, pages `assets/media/print/ID/pNN.webp` + `thumb/`), 3D model `{id, model:'truck', shots:N}`.
-- TESTIMONIALS are still PLACEHOLDER text — never invent quotes; ask the owner for real ones.
+- TESTIMONIALS is unused now (section removed). If it ever returns: never invent quotes; ask the owner for real ones.
 
 ## Media pipeline — `optimize-media.ps1`
 `.\optimize-media.ps1 <social|print|gifs|ai|editing> "<source file>" <id>` → writes optimized files into `assets/media/<type>/` and prints the line to paste into content.js.

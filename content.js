@@ -78,6 +78,7 @@ const PRINT = [
 ];
 
 /* ---- TESTIMONIALS ----
+   NOT SHOWN: the owner removed the testimonials section from the site (kept here in case it comes back).
    Placeholders — replace `text` with real client quotes.
    logo = number of the file in assets/media/clients/client-N.webp */
 const TESTIMONIALS = [
