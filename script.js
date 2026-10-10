@@ -25,16 +25,18 @@ $('#lang').onclick = () => setLang(lang === 'ar' ? 'en' : 'ar');
 function fitHero() {
   // measure only once the display font for the current language has loaded, otherwise the fallback font skews the size
   if (document.fonts && !fitHero.waiting) {
-    const spec = lang === 'ar' ? '900 100px Cairo' : '900 100px Archivo';
+    const spec = lang === 'ar' ? '900 100px Alexandria' : '900 100px Archivo';
     if (!document.fonts.check(spec)) { fitHero.waiting = true; document.fonts.load(spec).then(() => { fitHero.waiting = false; fitHero(); measurePanels(); }); }
   }
   const el = $('#heroName');
   el.style.fontSize = '100px';
   // leave room on the sides for the floating WhatsApp button on desktop
-  const target = Math.min(innerWidth * (lang === 'ar' ? .86 : .94), innerWidth > 760 ? innerWidth - 230 : innerWidth, 1500);
+  const wide = Math.min(innerWidth * .94, innerWidth > 760 ? innerWidth - 230 : innerWidth, 1500);
+  // the Arabic name is two short words with tall letters: at full width it would swallow the photo, so it stays narrower
+  const target = lang === 'ar' ? wide * (innerWidth > 760 ? .6 : .82) : wide;
   el.style.fontSize = (100 * target / el.scrollWidth) + 'px';
-  // the row above the name (intro + buttons) lines up with the name's two edges
-  el.closest('.hero').style.setProperty('--nameW', target + 'px');
+  // the row above the name (intro + buttons) lines up with the name's two edges (in Arabic: with the full-width grid)
+  el.closest('.hero').style.setProperty('--nameW', wide + 'px');
 }
 
 /* ---------- word-by-word reveal ---------- */

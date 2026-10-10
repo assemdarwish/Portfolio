@@ -11,7 +11,7 @@ The owner writes in Egyptian Arabic; reply in Egyptian Arabic.
 
 ## Brand
 - Colors: `#941a1a` (brand red), `#141212` (bg), `#ffffff`. Light accent for text: `#e5484d`.
-- Fonts: Archivo (display, wide/900), Plus Jakarta Sans (UI, replaced Space Grotesk), Cairo (Arabic).
+- Fonts: Archivo (display, wide/900), Plus Jakarta Sans (English UI). Arabic: Alexandria for titles (`--ar-display`), IBM Plex Sans Arabic for text (`--ar`) - replaced Cairo. All Arabic-only tuning lives in the "Arabic typography" block at the end of style.css (letter-spacing is forced to 0 in RTL because Arabic letters join; taller line-heights). The Arabic hero name is fitted to ~60% of the row width, not the full width.
 - Logo: `assets/media/logo.webp` (white "Darwish" wordmark, already cropped).
 
 ## Page order (index.html)
