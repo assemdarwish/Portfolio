@@ -626,7 +626,8 @@ $('#form').addEventListener('submit', e => {
 $('#yr').textContent = new Date().getFullYear();
 setLang(lang);
 document.fonts && document.fonts.ready.then(() => { fitHero(); measurePanels(); });
-addEventListener('load', () => { measurePanels(); setTimeout(openSite, 1300); });
+// the intro stays long enough for its greeting to finish, even when everything is already cached
+addEventListener('load', () => { measurePanels(); setTimeout(openSite, Math.max(900, 3000 - performance.now())); });
 
 
 

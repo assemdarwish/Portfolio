@@ -41,6 +41,8 @@ Arrays: `SOCIAL`, `AI_VIDEOS`, `EDITING`, `GIFS`, `PRINT`, `TESTIMONIALS`. Empty
 
 - About > tools: four tiles only, white icons with a brand-red glow (Photoshop, Illustrator, CapCut, AI Tools) - the owner's actual toolset; icons are inline (text/SVG), white on purpose, not the coloured brand icons.
 
+- Intro (`#loader`): the cut-out portrait (same polygon as the footer, own clip id `loadClip`), the greeting "منوّر ياعزيزى الفنان" (owner's exact wording, always Arabic) revealed word by word, then the loading bar. It stays at least ~3 s (`openSite` timer) so the greeting can finish. `logo-mark.webp` is now only the favicon source.
+
 ## Performance rules (keep these)
 - Panels are sticky and stack, so an earlier panel never leaves the viewport geometrically. `fx()` therefore marks every panel that is fully covered by a later one (or still far below) with `.away` (`visibility:hidden`, CSS animations paused) and fires a `vis` event on it. Anything with a rAF loop or a playing video must check `shown(el)` and re-start from `onShown(el, fn)` (see driftRow, the wheel, GIFs, heroTorch) - IntersectionObserver alone is NOT enough here.
 - Scroll effects write only when the value changed; the panel darkening is a real `<i class="cover">` element (opacity), `--inset` is a registered non-inherited property.

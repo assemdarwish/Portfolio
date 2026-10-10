@@ -11,11 +11,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cairo:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=14">
+<link rel="preload" as="image" href="assets/media/me-art.webp?v=3">
+<link rel="stylesheet" href="style.css?v=15">
 </head>
 <body>
 
-<div class="loader" id="loader"><img class="loader-logo" src="assets/media/logo-mark.webp" alt=""><div class="loader-bar"><i></i></div>
+<div class="loader" id="loader">
+  <svg class="loader-me" viewBox="40 55 695 845" aria-hidden="true">
+    <defs><clipPath id="loadClip"><polygon points="205,700 150,680 112,620 103,560 125,525 135,490 100,440 72,385 58,315 95,290 90,240 125,225 120,190 175,165 215,130 270,105 330,95 400,75 460,95 520,120 570,160 610,200 640,260 650,330 642,390 660,395 700,405 716,470 705,550 675,600 645,600 648,650 630,720 590,780 540,825 480,865 420,880 350,850 290,805 240,750"/></clipPath></defs>
+    <image href="assets/media/me-art.webp?v=3" width="900" height="1000" clip-path="url(#loadClip)"/>
+    <polygon points="205,700 150,680 112,620 103,560 125,525 135,490 100,440 72,385 58,315 95,290 90,240 125,225 120,190 175,165 215,130 270,105 330,95 400,75 460,95 520,120 570,160 610,200 640,260 650,330 642,390 660,395 700,405 716,470 705,550 675,600 645,600 648,650 630,720 590,780 540,825 480,865 420,880 350,850 290,805 240,750" fill="none" stroke="#f4ead9" stroke-width="12" stroke-linejoin="round"/>
+  </svg>
+  <p class="loader-hi" dir="rtl" lang="ar"><span>منوّر</span> <span>ياعزيزى</span> <span>الفنان</span></p>
+  <div class="loader-bar"><i></i></div>
 </div>
 <div class="cursor" id="cursor"></div>
 <div class="progress" id="progress"></div>
@@ -268,7 +276,7 @@
 </div>
 
 <script src="content.js?v=11"></script>
-<script src="script.js?v=11"></script>
+<script src="script.js?v=12"></script>
 </body>
 </html>
 

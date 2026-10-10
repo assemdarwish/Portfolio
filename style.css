@@ -19,12 +19,17 @@ ul,ol{list-style:none}
 .center{text-align:center}
 
 /* ---------- loader / chrome ---------- */
-.loader{position:fixed;inset:0;background:var(--bg);z-index:999;display:grid;place-content:center;gap:18px;transition:transform .9s var(--ease)}
+.loader{position:fixed;inset:0;background:var(--bg);z-index:999;display:grid;place-content:center;justify-items:center;transition:transform .9s var(--ease)}
 .loader.hide{transform:translateY(-100%)}
-.loader-logo{height:clamp(84px,12vw,130px);width:auto;margin:auto;animation:pulseLogo 1.4s ease-in-out infinite}
-@keyframes pulseLogo{50%{opacity:.45;transform:scale(.96)}}
-.loader-bar{width:220px;height:2px;background:var(--line);margin:auto;overflow:hidden}
-.loader-bar i{display:block;height:100%;background:var(--a);animation:load 1.2s var(--ease) forwards;transform:translateX(-100%)}
+/* intro: the portrait pops in, the greeting pulls into focus word by word, the bar loads underneath */
+.loader-me{width:clamp(150px,20vw,220px);height:auto;overflow:visible;animation:meIn 1s var(--ease) both}
+@keyframes meIn{from{opacity:0;transform:scale(.8) rotate(-6deg)}}
+.loader-hi{margin-top:22px;font-family:'Cairo',sans-serif;font-weight:800;font-size:clamp(1.5rem,3.4vw,2.3rem);line-height:1.5;white-space:nowrap;color:#fff;text-shadow:0 0 26px rgba(229,72,77,.55)}
+.loader-hi span{display:inline-block;animation:hiIn 1s var(--ease) both .45s}
+.loader-hi span:nth-child(2){animation-delay:.75s}.loader-hi span:nth-child(3){animation-delay:1.05s;color:var(--t)}
+@keyframes hiIn{from{opacity:0;filter:blur(14px);transform:translateY(16px) scale(1.12)}}
+.loader-bar{width:220px;height:2px;background:var(--line);margin-top:26px;overflow:hidden}
+.loader-bar i{display:block;height:100%;background:var(--a);animation:load 2.4s var(--ease) forwards;transform:translateX(-100%)}
 @keyframes load{to{transform:none}}
 .progress{position:fixed;top:0;left:0;height:3px;width:100%;transform:scaleX(0);transform-origin:0 50%;background:var(--pill);z-index:200}
 .cursor{position:fixed;width:34px;height:34px;border:1.5px solid var(--t);border-radius:50%;pointer-events:none;z-index:300;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s,opacity .3s;opacity:0}
