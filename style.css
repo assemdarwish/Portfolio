@@ -162,9 +162,22 @@ main{position:relative}
 .stats{display:flex;justify-content:center;gap:clamp(30px,6vw,80px);margin-bottom:34px;flex-wrap:wrap}
 .stats b{display:block;font-family:var(--display);font-stretch:112%;font-weight:900;font-size:clamp(2.2rem,4vw,3.2rem);line-height:1.1;color:var(--t)}
 .stats small{color:var(--mute);text-transform:uppercase;letter-spacing:.1em;font-size:.75rem}
-.tools{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:40px}
-.tools span{border:1px solid var(--line);padding:7px 15px;border-radius:99px;font-size:.82rem;color:var(--mute);transition:.3s}
-.tools span:hover{color:#fff;background:var(--a);border-color:var(--a);transform:translateY(-3px)}
+/* tools I use: white, softly glowing app tiles */
+.tools{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(18px,3.4vw,40px);margin-bottom:44px}
+.tool{display:grid;justify-items:center;gap:12px;width:clamp(84px,9.5vw,112px)}
+.tool-ic{position:relative;width:clamp(64px,7vw,84px);aspect-ratio:1;display:grid;place-items:center;border-radius:26%;font-style:normal;
+  font:700 clamp(1.6rem,2.7vw,2.2rem)/1 'Plus Jakarta Sans',sans-serif;letter-spacing:-.04em;color:#fff;
+  border:1.5px solid rgba(255,255,255,.9);background:rgba(255,255,255,.05);
+  text-shadow:0 0 14px rgba(255,255,255,.75);box-shadow:inset 0 0 16px rgba(255,255,255,.1);transition:transform .45s var(--ease),background .4s}
+.tool-ic svg{width:66%;height:66%;filter:drop-shadow(0 0 6px rgba(255,255,255,.7))}
+/* the glow is its own layer so that "breathing" only animates opacity */
+.tool-ic::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 26px 2px rgba(255,255,255,.5);opacity:.5;animation:toolGlow 3.6s ease-in-out infinite;pointer-events:none}
+.tool:nth-child(2) .tool-ic::after{animation-delay:-.9s}.tool:nth-child(3) .tool-ic::after{animation-delay:-1.8s}.tool:nth-child(4) .tool-ic::after{animation-delay:-2.7s}
+@keyframes toolGlow{50%{opacity:1}}
+.tool span{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);transition:color .3s}
+.tool:hover .tool-ic{transform:translateY(-6px) scale(1.06);background:rgba(255,255,255,.12)}
+.tool:hover .tool-ic::after{animation:none;opacity:1}
+.tool:hover span{color:#fff}
 
 /* floating "3D" objects */
 .obj{position:absolute;z-index:1;pointer-events:none;font-style:normal;animation:floaty 7s ease-in-out infinite}
