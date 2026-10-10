@@ -54,10 +54,10 @@ Arrays: `SOCIAL`, `AI_VIDEOS`, `EDITING`, `GIFS`, `PRINT`, `TESTIMONIALS`. Empty
 
 ## Leftovers / notes
 - `hero-fx.js` is the WebGL "living photo" effect for the old swing hero image — no longer loaded (kept in case it's wanted again).
-- `backup-v1/` = the first version of the site. Heavy originals live outside the site in `D:\درويش\website-originals`.
+- `backup-v1/` = the first version of the site. Heavy originals live outside the site, in the sibling folder `..\website-originals` (the parent folder was `D:\درويش`; the owner is renaming it to `D:\My Website`, so never hard-code the parent's name).
 - Footer bottom: two contact cards (`.fc`: email / WhatsApp, icon + label + value + arrow) and a closing bar (copyright · role line · back-to-top button); styles are in the last footer block of style.css.
 - Footer: no logo/name block any more. Centre = `.orbit`: the owner's illustrated portrait (`assets/media/me-art.webp`, a 900x1000 crop of the artwork; original in website-originals) inside an inline SVG: the head is cut out with a hand-traced `#headClip` polygon + cream sticker outline, and the eyes are redrawn (flat cream + black pupil) so the pupils follow the pointer (`eyes()` at the end of script.js; all coordinates are in the 900x1000 image space, `data-rest` = resting gaze), with the 4 social chips around it (Instagram, Facebook, TikTok, YouTube - owner's real profiles; no Behance/LinkedIn). Below it `.letters`: the Darwish wordmark cut into 7 images (`assets/media/letters/l1-7.webp`), each nudges on hover (replaced the old geometric shapes row). About stats (5+ years, 150+ projects, 15+ brands) are placeholders.
-- Git repo (branch `main`). Git installed via winget at `C:\Program Files\Git\cmd\git.exe` (may not be on PATH in old shells). `.gitignore` excludes `backup-v1/`, `.claude/`, unused hero-fx files. Zip snapshots also go to `D:\درويش\website-backups\`.
+- Git repo (branch `main`). Git installed via winget at `C:\Program Files\Git\cmd\git.exe` (may not be on PATH in old shells). `.gitignore` excludes `backup-v1/`, `.claude/`, unused hero-fx files. Zip snapshots also go to the sibling folder `..\website-backups\`.
 - Hosting plan discussed: GitHub Pages (exclude `backup-v1/` and `.claude/`).
 - WhatsApp: floating button (#waBtn, bottom-right, brand-red gradient - the owner did not want WhatsApp green) + footer link → wa.me/201040379430 (owner gave +2001040379430; the extra 0 after +20 was dropped). Prefilled message follows the site language. Hero name width leaves room for it on desktop.
 
