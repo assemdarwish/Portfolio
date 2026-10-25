@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="فروع موسى كوفي - MOUSA Coffee branches">
+<meta charset="utf-8">
+<link rel="icon" href="favicon.png">
+<title>Mousa Coffee Branches</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=El+Messiri:wght@500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* Layout: deep-forest single-theme brand page — steaming logo hero, gold ticker, branch grid with live Cairo-time status, hotline band */
+:root{
+  --forest:#0E3020; --forest-deep:#091F15; --forest-2:#133B28; --forest-3:#1A4A33;
+  --gold:#B5992B; --gold-hi:#E2C766; --gold-lo:#7E6A1D;
+  --cream:#F1E9D2; --cream-dim:#B9B49C;
+  --open:#7FD39A; --soon:#E2C766; --closed:#D98B6F;
+  --line:rgba(181,153,43,.22);
+  --f-display-ar:"El Messiri","Noto Naskh Arabic",serif;
+  --f-body-ar:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+  --f-display-en:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --f-body-en:"Jost","Segoe UI",system-ui,sans-serif;
+  --f-display:var(--f-display-ar); --f-body:var(--f-body-ar);
+  color-scheme:dark;
+}
+html[lang="en"]{--f-display:var(--f-display-en);--f-body:var(--f-body-en)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--forest);color:var(--cream);font-family:var(--f-body);font-size:16px;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--forest-deep)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* grain */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* header */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--forest-deep) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.mini-logo{width:118px;height:47px;background:var(--gold);-webkit-mask:url(logo.png) center/contain no-repeat;mask:url(logo.png) center/contain no-repeat;flex:none}
+.top nav{display:flex;align-items:center;gap:8px}
+.top nav a.lnk{font-size:14px;text-decoration:none;color:var(--cream-dim);padding:6px 10px;border-radius:8px;transition:color .2s}
+.top nav a.lnk:hover{color:var(--gold-hi)}
+.lang{display:inline-flex;border:1px solid var(--gold);border-radius:999px;padding:3px;gap:2px;background:var(--forest-deep)}
+.lang button{all:unset;cursor:pointer;font:600 13px/1 var(--f-body-en);padding:8px 13px;border-radius:999px;color:var(--gold);letter-spacing:.06em;transition:background .25s,color .25s}
+.lang button[data-l="ar"]{font-family:var(--f-body-ar);letter-spacing:0}
+.lang button[aria-pressed="true"]{background:var(--gold);color:var(--forest-deep)}
+.lang button:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
+@media (max-width:640px){.top nav a.lnk{display:none}.mini-logo{width:96px;height:38px}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;isolation:isolate;
+  background:radial-gradient(ellipse 70% 60% at 50% 38%,var(--forest-3) 0%,var(--forest) 55%,var(--forest-deep) 100%)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+.hero .wrap{display:flex;flex-direction:column;align-items:center;text-align:center;padding-block:clamp(56px,10vw,110px) clamp(48px,8vw,90px);gap:22px}
+.eyebrow{font:500 13px/1 var(--f-body);letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:12px}
+html[lang="ar"] .eyebrow{letter-spacing:.04em;font-size:15px}
+.eyebrow::before,.eyebrow::after{content:"";width:34px;height:1px;background:var(--gold)}
+.logo-big{width:min(640px,88vw);aspect-ratio:853/337;max-width:100%;
+  -webkit-mask:url(logo.png) center/contain no-repeat;mask:url(logo.png) center/contain no-repeat;
+  background:linear-gradient(110deg,var(--gold) 0%,var(--gold) 38%,#F6E39A 48%,var(--gold) 58%,var(--gold) 100%);background-size:250% 100%;
+  animation:shimmer 5.5s ease-in-out infinite,rise 1.2s cubic-bezier(.2,.7,.2,1) both}
+@keyframes shimmer{0%,30%{background-position:100% 0}70%,100%{background-position:0 0}}
+@keyframes rise{from{transform:translateY(18px);filter:blur(6px)}to{transform:none;filter:none}}
+.hero h1{font-family:var(--f-display);font-weight:600;font-size:clamp(28px,4.6vw,50px);line-height:1.25;margin:6px 0 0;text-wrap:balance;max-width:20ch}
+html[lang="en"] .hero h1{font-weight:600;font-style:italic;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--gold-hi)}
+html[lang="en"] .hero h1 em{font-style:italic}
+.hero p.lead{margin:0;color:var(--cream-dim);max-width:52ch;font-size:clamp(15px,1.7vw,18px)}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font:600 15px/1 var(--f-body);padding:15px 24px;border-radius:999px;transition:transform .25s,box-shadow .25s,background .25s;cursor:pointer;border:0}
+.btn-gold{background:var(--gold);color:var(--forest-deep);box-shadow:0 10px 30px -10px rgba(181,153,43,.6)}
+.btn-gold:hover{transform:translateY(-2px);background:var(--gold-hi)}
+.btn-ghost{border:1px solid var(--gold);color:var(--gold-hi);background:transparent}
+.btn-ghost:hover{background:rgba(181,153,43,.12)}
+.btn svg{width:18px;height:18px;flex:none}
+.stats{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(18px,5vw,56px);margin-top:26px;padding-top:26px;border-top:1px solid var(--line);width:min(720px,100%)}
+.stat{display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+@media (max-width:480px){.stats{flex-wrap:nowrap;gap:14px}.stat{flex:1;min-width:0}.stat span{font-size:12px;line-height:1.4}}
+.stat b{font:600 clamp(34px,5vw,48px)/1 var(--f-display-en);color:var(--gold-hi);font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--cream-dim)}
+
+/* ticker */
+.ticker{background:var(--gold);color:var(--forest-deep);overflow:hidden;border-block:1px solid var(--gold-lo);position:relative;z-index:2}
+.ticker .track{display:flex;width:max-content;animation:tick 38s linear infinite}
+html[dir="rtl"] .ticker .track{animation-name:tickR}
+.ticker:hover .track{animation-play-state:paused}
+.ticker span{font:600 17px/1 var(--f-display);padding:15px 22px;white-space:nowrap;display:flex;align-items:center;gap:22px}
+.ticker span::after{content:"";width:7px;height:10px;border-radius:50%;background:var(--forest-deep);transform:rotate(30deg);box-shadow:inset -2px 0 0 var(--gold-lo)}
+@keyframes tick{to{transform:translateX(-50%)}}
+@keyframes tickR{to{transform:translateX(50%)}}
+
+/* branches */
+section.branches{position:relative;z-index:2;padding-block:clamp(64px,9vw,110px)}
+.sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px 40px;margin-bottom:34px}
+.sec-head h2{font-family:var(--f-display);font-weight:700;font-size:clamp(30px,4.4vw,48px);line-height:1.15;margin:8px 0 0;text-wrap:balance}
+.sec-head p{margin:8px 0 0;color:var(--cream-dim);max-width:46ch}
+.clock{display:inline-flex;align-items:center;gap:10px;font-size:14px;color:var(--cream-dim);border:1px solid var(--line);padding:9px 14px;border-radius:999px;font-variant-numeric:tabular-nums;background:var(--forest-deep)}
+.clock b{color:var(--gold-hi);font-family:var(--f-body-en);font-weight:600}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.chip{all:unset;cursor:pointer;font:500 14px/1 var(--f-body);padding:11px 16px;border-radius:999px;border:1px solid var(--line);color:var(--cream-dim);display:inline-flex;gap:8px;align-items:center;transition:all .2s}
+.chip i{font-style:normal;font:600 12px/1 var(--f-body-en);background:var(--forest-3);color:var(--gold-hi);padding:4px 7px;border-radius:999px}
+.chip:hover{border-color:var(--gold);color:var(--cream)}
+.chip[aria-pressed="true"]{background:var(--forest-3);border-color:var(--gold);color:var(--gold-hi)}
+.chip:focus-visible{outline:2px solid var(--gold-hi);outline-offset:2px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+@media (max-width:400px){.grid{grid-template-columns:1fr}}
+.card{position:relative;background:linear-gradient(160deg,var(--forest-2),var(--forest-deep));border:1px solid var(--line);border-radius:18px;padding:24px 24px 20px;display:flex;flex-direction:column;gap:14px;min-width:0;overflow:hidden;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s,box-shadow .35s;animation:cardIn .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0)*70ms)}
+@keyframes cardIn{from{transform:translateY(16px)}to{transform:none}}
+.card:hover{transform:translateY(-4px);border-color:rgba(226,199,102,.55);box-shadow:0 22px 50px -24px rgba(0,0,0,.7)}
+.card::after{content:"";position:absolute;inset-inline-end:-40px;top:-40px;width:130px;height:130px;border-radius:50%;
+  background:radial-gradient(circle,rgba(181,153,43,.18),transparent 70%);transition:transform .5s}
+.card:hover::after{transform:scale(1.5)}
+.card .row1{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.card h3{font-family:var(--f-display);font-weight:600;font-size:23px;line-height:1.3;margin:0;min-width:0}
+.card h3 small{display:block;font:500 12px/1.4 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+html[lang="ar"] .card h3 small{letter-spacing:.02em;font-size:13px}
+.addr{display:flex;gap:10px;color:var(--cream-dim);font-size:15px;margin:0;min-width:0}
+.addr svg{flex:none;width:18px;height:18px;margin-top:4px;color:var(--gold)}
+.status{display:inline-flex;align-items:center;gap:8px;font:600 12.5px/1 var(--f-body);padding:8px 11px;border-radius:999px;white-space:nowrap;flex:none;border:1px solid currentColor}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.status.open{color:var(--open);background:rgba(127,211,154,.08)}
+.status.open::before{animation:pulse 1.8s ease-out infinite}
+.status.closed{color:var(--closed);background:rgba(217,139,111,.08)}
+.status.soon{color:var(--soon);background:rgba(226,199,102,.08)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(127,211,154,.6)}100%{box-shadow:0 0 0 8px rgba(127,211,154,0)}}
+.meta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:14px;margin-top:auto}
+.hours{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--cream)}
+.hours svg{width:17px;height:17px;color:var(--gold)}
+.map-link{display:inline-flex;align-items:center;gap:7px;font:600 14px/1 var(--f-body);color:var(--gold-hi);text-decoration:none;padding:9px 12px;border-radius:10px;transition:background .2s}
+.map-link:hover{background:rgba(181,153,43,.12)}
+.map-link svg{width:16px;height:16px}
+html[dir="rtl"] .map-link .arr{transform:scaleX(-1)}
+.ribbon{font:600 12px/1.4 var(--f-body);color:var(--forest-deep);background:var(--gold-hi);padding:6px 10px;border-radius:8px;align-self:flex-start}
+.card.is-soon{border-style:dashed}
+.empty{color:var(--cream-dim)}
+
+/* hotline */
+.hotline{position:relative;z-index:2;padding-block:0 clamp(70px,9vw,110px)}
+.hot-card{position:relative;overflow:hidden;border-radius:26px;background:var(--gold);color:var(--forest-deep);
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,48px);align-items:center;padding:clamp(28px,5vw,56px)}
+@media (max-width:700px){.hot-card{grid-template-columns:1fr;text-align:center;justify-items:center}}
+.hot-card::before{content:"";position:absolute;inset:0;background:repeating-radial-gradient(circle at 100% 0,transparent 0 22px,rgba(9,31,21,.06) 22px 23px);pointer-events:none}
+html[dir="rtl"] .hot-card::before{background:repeating-radial-gradient(circle at 0 0,transparent 0 22px,rgba(9,31,21,.06) 22px 23px)}
+.cup{width:150px;height:150px;position:relative;flex:none}
+.cup svg{width:100%;height:100%;overflow:visible}
+.cup .steam path{stroke:var(--forest-deep);stroke-width:4;fill:none;stroke-linecap:round;opacity:0;animation:steam 3.2s ease-in-out infinite}
+.cup .steam path:nth-child(2){animation-delay:1s}
+.cup .steam path:nth-child(3){animation-delay:2s}
+@keyframes steam{0%{opacity:0;transform:translateY(10px)}35%{opacity:.75}100%{opacity:0;transform:translateY(-22px)}}
+.cup .liquid{animation:slosh 4s ease-in-out infinite;transform-origin:75px 70px}
+@keyframes slosh{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.hot-body{position:relative;display:flex;flex-direction:column;gap:12px;min-width:0}
+.hot-body .eyebrow{color:var(--forest-deep)}
+.hot-body .eyebrow::before,.hot-body .eyebrow::after{background:var(--forest-deep)}
+@media (max-width:700px){.hot-body .eyebrow{justify-content:center}}
+.hot-body h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,3.6vw,40px);line-height:1.2;margin:0;text-wrap:balance}
+.num{font:600 clamp(36px,7vw,68px)/1 var(--f-display-en);letter-spacing:.02em;direction:ltr;unicode-bidi:isolate;user-select:all;font-variant-numeric:tabular-nums}
+.hot-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+@media (max-width:700px){.hot-actions{justify-content:center}}
+.btn-dark{background:var(--forest-deep);color:var(--gold-hi)}
+.btn-dark:hover{transform:translateY(-2px);background:var(--forest-2)}
+.btn-line{border:1.5px solid var(--forest-deep);color:var(--forest-deep);background:transparent}
+.btn-line:hover{background:rgba(9,31,21,.08)}
+.toast{font-size:14px;font-weight:600;min-height:1.4em}
+
+footer{position:relative;z-index:2;border-top:1px solid var(--line);background:var(--forest-deep)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;padding-block:26px;color:var(--cream-dim);font-size:14px}
+footer .mini-logo{width:100px;height:40px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<header class="top">
+  <div class="wrap">
+    <a href="#home" class="mini-logo" aria-label="MOUSA Coffee"></a>
+    <nav>
+      <a class="lnk" href="#branches" data-t="navBranches">الفروع</a>
+      <a class="lnk" href="#hotline" data-t="navHotline">الرقم الموحد</a>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-l="ar" aria-pressed="true">عربي</button>
+        <button type="button" data-l="en" aria-pressed="false">EN</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="home">
+  <section class="hero">
+    <canvas id="fx" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="eyebrow" data-t="eyebrow">فروعنا في القاهرة والجيزة</div>
+      <div class="logo-big" role="img" aria-label="MOUSA Coffee"></div>
+      <h1 data-t="h1" data-html>فنجانك <em>أقرب</em> مما تتخيل</h1>
+      <p class="lead" data-t="lead">٧ فروع من مدينة نصر للشيخ زايد، أغلبهم شغالين ٢٤ ساعة. اختار أقرب فرع ليك وافتح الطريق على الخريطة.</p>
+      <div class="cta-row">
+        <a class="btn btn-gold" href="#branches">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
+          <span data-t="ctaFind">اعرف أقرب فرع</span>
+        </a>
+        <a class="btn btn-ghost" href="#hotline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+          <span data-t="ctaCall">كلّم الكول سنتر</span>
+        </a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="sTotal">7</b><span data-t="stTotal">فروع</span></div>
+        <div class="stat"><b id="s24">5</b><span data-t="st24">فروع ٢٤ ساعة</span></div>
+        <div class="stat"><b id="sOpen">–</b><span data-t="stOpen">مفتوحين دلوقتي</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true"><div class="track" id="ticker"></div></div>
+
+  <section class="branches" id="branches">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow" data-t="brEyebrow">اللوكيشنز</div>
+          <h2 data-t="brTitle">فروع موسى كوفي</h2>
+          <p data-t="brSub">حالة كل فرع بتتحدث لوحدها حسب توقيت القاهرة.</p>
+        </div>
+        <div class="clock"><span data-t="cairoNow">القاهرة الآن</span> <b id="clock">--:--</b></div>
+      </div>
+      <div class="filters" role="group" aria-label="Filter">
+        <button type="button" class="chip" data-f="all" aria-pressed="true"><span data-t="fAll">كل الفروع</span><i id="cAll">7</i></button>
+        <button type="button" class="chip" data-f="open" aria-pressed="false"><span data-t="fOpen">مفتوح دلوقتي</span><i id="cOpen">0</i></button>
+        <button type="button" class="chip" data-f="h24" aria-pressed="false"><span data-t="f24">٢٤ ساعة</span><i id="c24">5</i></button>
+        <button type="button" class="chip" data-f="soon" aria-pressed="false"><span data-t="fSoon">قريبًا</span><i id="cSoon">2</i></button>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="hotline" id="hotline">
+    <div class="wrap">
+      <div class="hot-card">
+        <div class="cup" aria-hidden="true">
+          <svg viewBox="0 0 150 150">
+            <g class="steam">
+              <path d="M58 40c-8-8 8-14 0-24"/>
+              <path d="M75 42c-8-9 8-15 0-27"/>
+              <path d="M92 40c-8-8 8-14 0-24"/>
+            </g>
+            <path d="M28 58h94l-8 60a16 16 0 0 1-16 14H52a16 16 0 0 1-16-14z" fill="#091F15"/>
+            <path d="M122 70h6a14 14 0 0 1 0 28h-9" fill="none" stroke="#091F15" stroke-width="8"/>
+            <g class="liquid"><ellipse cx="75" cy="62" rx="44" ry="6" fill="#4A2E1A"/><ellipse cx="68" cy="61" rx="12" ry="2" fill="#7A5232"/></g>
+            <rect x="18" y="134" width="114" height="6" rx="3" fill="#091F15"/>
+          </svg>
+        </div>
+        <div class="hot-body">
+          <div class="eyebrow" data-t="hotEyebrow">الرقم الموحد · كول سنتر</div>
+          <h2 data-t="hotTitle">عندك سؤال؟ رقم واحد لكل الفروع</h2>
+          <div class="num" id="num">01211999965</div>
+          <div class="hot-actions">
+            <a class="btn btn-dark" href="tel:01211999965">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+              <span data-t="call">اتصل</span>
+            </a>
+            <button type="button" class="btn btn-line" id="copy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span data-t="copy">انسخ الرقم</span>
+            </button>
+            <span class="toast" id="toast" role="status"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="mini-logo" role="img" aria-label="MOUSA Coffee"></span>
+    <span data-t="foot">© MOUSA Coffee · كل الحقوق محفوظة</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+const PHONE="01211999965";
+const B=[
+ {id:"nasr",h24:true,ar:{n:"مدينة نصر",a:"أمام استاد القاهرة الدولي، أسفل كوبري الفنجري"},en:{n:"Nasr City",a:"In front of Cairo International Stadium, under El-Fangary Bridge"},q:"Cairo International Stadium El Fangary Bridge Nasr City"},
+ {id:"maadi",open:7,close:24,ar:{n:"كورنيش النيل – المعادي",a:"كورنيش النيل، أمام أبراج المعادي ستار"},en:{n:"Maadi Nile Corniche",a:"Nile Corniche, in front of Maadi Star Towers"},q:"Maadi Star Towers Nile Corniche Cairo"},
+ {id:"tahrir",open:7,close:24,ar:{n:"ميدان التحرير",a:"أمام بوابة الجامعة الأمريكية، شارع محمد محمود"},en:{n:"Tahrir Square",a:"In front of the American University gate, Mohamed Mahmoud St."},q:"American University in Cairo Mohamed Mahmoud Street Tahrir"},
+ {id:"zayed",h24:true,ar:{n:"الشيخ زايد",a:"محور ٢٦ يوليو، محطة شل أوت، بعد مسجد الشرطة"},en:{n:"Sheikh Zayed",a:"26th of July Axis, Shell Out station, after the Police Mosque"},q:"Shell 26th of July Axis Police Mosque Sheikh Zayed"},
+ {id:"shahd",h24:true,ar:{n:"محور الشهد",a:"داخل محطة أولى إنرجي، بعد ميدان محمد ذكي"},en:{n:"Al-Shahd Axis",a:"Inside Oula Energy station, after Mohamed Zaki Square"},q:"Oula Energy Mohamed Zaki Square Cairo"},
+ {id:"zahraa",h24:true,soon:15,ar:{n:"زهراء المعادي",a:"شارع كارفور، أمام أبراج الحجاز"},en:{n:"Zahraa El Maadi",a:"Carrefour St., in front of Al-Hegaz Towers"},q:"Carrefour Zahraa El Maadi"},
+ {id:"tenth",h24:true,soon:30,ar:{n:"العاشر من رمضان",a:"محطة شل أوت، نادي الرواد"},en:{n:"10th of Ramadan",a:"Shell Out station, El Rowad Club"},q:"El Rowad Club 10th of Ramadan City"}
+];
+const T={
+ ar:{navBranches:"الفروع",navHotline:"الرقم الموحد",eyebrow:"فروعنا في القاهرة والجيزة والشرقية",h1:"فنجانك <em>أقرب</em> مما تتخيل",
+  lead:"٧ فروع من مدينة نصر للشيخ زايد، أغلبهم شغالين ٢٤ ساعة. اختار أقرب فرع ليك وافتح الطريق على الخريطة.",
+  ctaFind:"اعرف أقرب فرع",ctaCall:"كلّم الكول سنتر",stTotal:"فروع",st24:"فروع ٢٤ ساعة",stOpen:"مفتوحين دلوقتي",
+  brEyebrow:"اللوكيشنز",brTitle:"فروع موسى كوفي",brSub:"حالة كل فرع بتتحدث لوحدها حسب توقيت القاهرة.",cairoNow:"القاهرة الآن",
+  fAll:"كل الفروع",fOpen:"مفتوح دلوقتي",f24:"٢٤ ساعة",fSoon:"قريبًا",
+  hotEyebrow:"الرقم الموحد · كول سنتر",hotTitle:"عندك سؤال؟ رقم واحد لكل الفروع",call:"اتصل",copy:"انسخ الرقم",copied:"اتنسخ الرقم ✓",copyFail:"الرقم متحدد، انسخه بإيدك",
+  foot:"© MOUSA Coffee · كل الحقوق محفوظة",branch:"فرع",
+  h24:"مفتوح ٢٤ ساعة",hrs:"من ٧ ص لحد ١٢ ص",openNow:"مفتوح الآن",open24:"مفتوح ٢٤/٧",closed:"مقفول · يفتح ٧ ص",closesAt:"مفتوح · يقفل ١٢ ص",
+  soonTag:"قريبًا",soonRib:d=>`الافتتاح خلال ${d===15?"١٥":"٣٠"} يوم`,map:"الاتجاهات",empty:"مفيش فروع مفتوحة دلوقتي في الفلتر ده."},
+ en:{navBranches:"Branches",navHotline:"Hotline",eyebrow:"Across Cairo, Giza & Sharqia",h1:"Your cup is <em>closer</em> than you think",
+  lead:"Seven branches from Nasr City to Sheikh Zayed, most of them open around the clock. Pick the one nearest you and get directions.",
+  ctaFind:"Find a branch",ctaCall:"Call the hotline",stTotal:"Branches",st24:"Open 24 hours",stOpen:"Open right now",
+  brEyebrow:"Locations",brTitle:"MOUSA Coffee branches",brSub:"Each branch status updates live on Cairo time.",cairoNow:"Cairo now",
+  fAll:"All branches",fOpen:"Open now",f24:"24 hours",fSoon:"Coming soon",
+  hotEyebrow:"Unified number · Call center",hotTitle:"Got a question? One number for every branch",call:"Call",copy:"Copy number",copied:"Number copied ✓",copyFail:"Number selected, copy it manually",
+  foot:"© MOUSA Coffee · All rights reserved",branch:"Branch",
+  h24:"Open 24 hours",hrs:"7 AM – 12 AM",openNow:"Open now",open24:"Open 24/7",closed:"Closed · opens 7 AM",closesAt:"Open · closes 12 AM",
+  soonTag:"Coming soon",soonRib:d=>`Opening within ${d} days`,map:"Directions",empty:"No branches match this filter right now."}
+};
+let lang="ar",filter="all";
+try{const s=localStorage.getItem("mousa-lang");if(s==="en"||s==="ar")lang=s}catch(e){}
+if(location.hash==="#en")lang="en";else if(location.hash==="#ar")lang="ar";
+
+function cairoHour(){
+  const p=new Intl.DateTimeFormat("en-GB",{timeZone:"Africa/Cairo",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date());
+  const h=+p.find(x=>x.type==="hour").value%24,m=+p.find(x=>x.type==="minute").value;return {h,m};
+}
+function state(b){
+  if(b.soon)return "soon";
+  if(b.h24)return "open";
+  const {h}=cairoHour();return (h>=b.open&&h<b.close)?"open":"closed";
+}
+const ico={
+ pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>',
+ clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+ arr:'<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>'
+};
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function render(){
+  const t=T[lang],g=document.getElementById("grid");
+  const list=B.filter(b=>{const s=state(b);return filter==="all"||(filter==="open"&&s==="open")||(filter==="h24"&&b.h24)||(filter==="soon"&&b.soon)});
+  g.innerHTML=list.length?list.map((b,i)=>{
+    const s=state(b),L=b[lang];
+    const st=s==="soon"?t.soonTag:s==="closed"?t.closed:(b.h24?t.open24:t.closesAt);
+    return `<article class="card${b.soon?" is-soon":""}" style="--i:${i}">
+      <div class="row1"><h3><small>${t.branch}</small>${esc(L.n)}</h3><span class="status ${s}">${st}</span></div>
+      <p class="addr">${ico.pin}<span>${esc(L.a)}</span></p>
+      ${b.soon?`<span class="ribbon">${t.soonRib(b.soon)}</span>`:""}
+      <div class="meta"><span class="hours">${ico.clock}${b.h24?t.h24:t.hrs}</span>
+      <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.q)}" target="_blank" rel="noopener">${t.map}${ico.arr}</a></div>
+    </article>`}).join(""):`<p class="empty">${t.empty}</p>`;
+  const openN=B.filter(b=>state(b)==="open").length;
+  document.getElementById("sOpen").textContent=openN;
+  document.getElementById("cOpen").textContent=openN;
+}
+function tickClock(){
+  const {h,m}=cairoHour();
+  document.getElementById("clock").textContent=lang==="ar"
+    ? new Intl.DateTimeFormat("ar-EG",{timeZone:"Africa/Cairo",hour:"numeric",minute:"2-digit"}).format(new Date())
+    : new Intl.DateTimeFormat("en-US",{timeZone:"Africa/Cairo",hour:"numeric",minute:"2-digit"}).format(new Date());
+}
+function ticker(){
+  const names=B.map(b=>b[lang].n);const items=[...names,...names,...names,...names];
+  document.getElementById("ticker").innerHTML=items.map(n=>`<span>${esc(n)}</span>`).join("");
+}
+function applyLang(){
+  const t=T[lang],root=document.documentElement;
+  root.lang=lang;root.dir=lang==="ar"?"rtl":"ltr";
+  document.querySelectorAll("[data-t]").forEach(el=>{const v=t[el.dataset.t];if(typeof v!=="string")return;if(el.hasAttribute("data-html"))el.innerHTML=v;else el.textContent=v});
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
+  try{localStorage.setItem("mousa-lang",lang)}catch(e){}
+  render();tickClock();ticker();
+}
+document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>{if(lang!==b.dataset.l){lang=b.dataset.l;applyLang()}}));
+document.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{
+  filter=c.dataset.f;document.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x===c));render();
+}));
+document.getElementById("copy").addEventListener("click",()=>{
+  const toast=document.getElementById("toast");
+  const fallback=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById("num"));const s=getSelection();s.removeAllRanges();s.addRange(r);toast.textContent=T[lang].copyFail};
+  try{navigator.clipboard.writeText(PHONE).then(()=>{toast.textContent=T[lang].copied;setTimeout(()=>toast.textContent="",2200)},fallback)}catch(e){fallback()}
+});
+applyLang();
+setInterval(()=>{tickClock();render()},60000);
+
+/* hero motion: rising steam ribbons + drifting coffee beans */
+const cv=document.getElementById("fx"),ctx=cv.getContext("2d");
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let W,H,dpr,beans=[],wisps=[];
+function size(){dpr=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+  const n=Math.round(Math.min(18,W/70));beans=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,s:6+Math.random()*10,r:Math.random()*6.28,vr:(Math.random()-.5)*.006,vy:.12+Math.random()*.25,a:.12+Math.random()*.22,ph:Math.random()*6.28}));
+  wisps=Array.from({length:7},(_,i)=>({x:W*(.2+i*.1)+(Math.random()-.5)*40,ph:Math.random()*6.28,sp:.4+Math.random()*.5,amp:14+Math.random()*22,w:1+Math.random()*1.6}));
+}
+function bean(b){ctx.save();ctx.translate(b.x,b.y);ctx.rotate(b.r);ctx.globalAlpha=b.a;
+  ctx.fillStyle="#B5992B";ctx.beginPath();ctx.ellipse(0,0,b.s,b.s*.68,0,0,6.283);ctx.fill();
+  ctx.strokeStyle="#0E3020";ctx.lineWidth=b.s*.16;ctx.lineCap="round";ctx.beginPath();ctx.moveTo(-b.s*.8,0);ctx.bezierCurveTo(-b.s*.3,-b.s*.35,b.s*.3,b.s*.35,b.s*.8,0);ctx.stroke();ctx.restore()}
+function frame(t){
+  t=t||0;ctx.clearRect(0,0,W,H);
+  wisps.forEach(w=>{
+    const base=H*.92;ctx.beginPath();
+    for(let y=0;y<=H*.85;y+=6){const k=y/(H*.85);const x=w.x+Math.sin(y*.012+t*.0006*w.sp+w.ph)*w.amp*(0.3+k*1.4);y===0?ctx.moveTo(x,base-y):ctx.lineTo(x,base-y)}
+    const gr=ctx.createLinearGradient(0,base,0,base-H*.85);gr.addColorStop(0,"rgba(226,199,102,0)");gr.addColorStop(.35,"rgba(226,199,102,.16)");gr.addColorStop(1,"rgba(226,199,102,0)");
+    ctx.strokeStyle=gr;ctx.lineWidth=w.w;ctx.stroke();
+  });
+  beans.forEach(b=>{if(!reduce){b.y-=b.vy;b.r+=b.vr;b.x+=Math.sin(t*.0004+b.ph)*.15;if(b.y<-20){b.y=H+20;b.x=Math.random()*W}}bean(b)});
+  if(!reduce)requestAnimationFrame(frame);
+}
+size();addEventListener("resize",()=>{size();if(reduce)frame(0)});
+reduce?frame(0):requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
